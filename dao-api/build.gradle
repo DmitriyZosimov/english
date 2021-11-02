@@ -1,0 +1,20 @@
+apply plugin: 'java'
+
+dependencies {
+    implementation project (':model')
+    implementation project (':dao')
+    implementation spring.context,
+            spring.orm,
+            logback.logback,
+            hibernate.em
+
+    testImplementation project (':test-db')
+    testImplementation project (':aws-rds')
+    testImplementation spring.test,
+            junit.junit,
+            easymock.easymock
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}

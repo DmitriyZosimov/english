@@ -1,0 +1,15 @@
+apply plugin: 'java'
+
+dependencies {
+    implementation spring_cloud.context, 
+            spring_cloud.jdbc,
+            postgresql.postgresql
+            
+    testImplementation spring.test,
+            junit.junit,
+            easymock.easymock
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}

@@ -1,0 +1,22 @@
+apply plugin : 'java'
+
+dependencies {
+    implementation project(":model")
+    implementation project(":service")
+    implementation project(":dao")
+    implementation project(":dao-api")
+    implementation project(":test-db")
+
+    implementation spring.context,
+            spring.tx,
+            logback.logback
+
+    testImplementation project(":test-db")
+    testImplementation spring.test,
+            junit.junit,
+            mockito.junit_jupiter
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}

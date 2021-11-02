@@ -1,0 +1,94 @@
+plugins {
+    id 'java'
+    id 'war'
+}
+
+group 'com.myenglish'
+version '0.0.1'
+
+sourceCompatibility = 1.8
+
+ext {
+
+    easymockVersion = '4.3'
+    h2Version = '1.4.200'
+    hibernateVersion = '5.5.7.Final'
+    hibernateValidatorVersion = '7.0.1.Final'
+    junitVersion = '5.7.2'
+    logbackVersion = '1.2.5'
+    lombokVersion = '1.18.20'
+    mockitoVersion = '3.12.4'
+    postgresqlVersion = '42.3.1'
+    springVersion = '5.2.16.RELEASE'
+    springCloudVersion = '2.2.6.RELEASE'
+    vaadinVersion = '20.0.7'
+    vaadinSpringVersion = '18.0.0'
+
+    easymock = [
+            easymock    : "org.easymock:easymock:$easymockVersion"
+    ]
+
+    h2 = [
+            h2 : "com.h2database:h2:$h2Version"
+    ]
+
+    hibernate = [
+            validator   : "org.hibernate.validator:hibernate-validator:$hibernateValidatorVersion",
+            ehcache     : "org.hibernate:hibernate-ehcache:$hibernateVersion",
+            em          : "org.hibernate:hibernate-entitymanager:$hibernateVersion"
+    ]
+
+    junit = [
+            junit : "org.junit.jupiter:junit-jupiter:$junitVersion"
+    ]
+
+    logback = [
+            logback : "ch.qos.logback:logback-classic:$logbackVersion"
+    ]
+
+    lombok = [
+            lombok : "org.projectlombok:lombok:$lombokVersion"
+    ]
+
+    mockito = [
+            core                : "org.mockito:mockito-core:$mockitoVersion",
+            junit_jupiter       : "org.mockito:mockito-junit-jupiter:$mockitoVersion"
+    ]
+
+    postgresql = [
+            postgresql  : "org.postgresql:postgresql:$postgresqlVersion"
+    ]
+
+    spring = [
+            context     : "org.springframework:spring-context:$springVersion",
+            tx          : "org.springframework:spring-tx:$springVersion",
+            jdbc        : "org.springframework:spring-jdbc:$springVersion",
+            orm         : "org.springframework:spring-orm:$springVersion",
+            test        : "org.springframework:spring-test:$springVersion",
+            web         : "org.springframework:spring-web:$springVersion",
+            webmvc      : "org.springframework:spring-webmvc:$springVersion"
+    ]
+
+    spring_cloud = [
+            context     : "org.springframework.cloud:spring-cloud-aws-context:$springCloudVersion",
+            jdbc        : "org.springframework.cloud:spring-cloud-aws-jdbc:$springCloudVersion"
+    ]
+
+    vaadin_libs = [
+            vaadin          : "com.vaadin:vaadin:$vaadinVersion",
+            vaadin_spring   : "com.vaadin:vaadin-spring:$vaadinSpringVersion"
+    ]
+}
+
+subprojects {
+
+    apply plugin: 'java-library'
+
+    repositories {
+        mavenCentral()
+    }
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}

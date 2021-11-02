@@ -1,0 +1,10 @@
+rootProject.name = 'english'
+include 'model'
+include 'dao'
+include 'dao-api'
+include 'test-db'
+include 'service'
+include 'service-api'
+include 'web'
+include 'aws-rds'
+

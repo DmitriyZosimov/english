@@ -1,0 +1,34 @@
+buildscript {
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "com.vaadin:vaadin-gradle-plugin:$vaadinVersion"
+    }
+}
+
+apply plugin: "com.vaadin"
+apply plugin: 'war'
+
+dependencies {
+    implementation project (':model')
+    implementation project (':aws-rds')
+    implementation project (':service')
+    implementation project (':service-api')
+    implementation project (':dao-api')
+
+    implementation spring.web,
+            spring.webmvc,
+            vaadin_libs.vaadin
+    implementation (vaadin_libs.vaadin_spring) {
+        transitive = false
+    }
+
+    testCompile spring.test,
+            junit.junit,
+            easymock.easymock
+}
+
+defaultTasks("clean", "vaadinBuildFrontend", "build")

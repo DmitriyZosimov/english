@@ -1,0 +1,15 @@
+apply plugin : 'java'
+
+dependencies {
+    implementation hibernate.em
+    compileOnly lombok.lombok
+    annotationProcessor lombok.lombok
+
+    testImplementation junit.junit
+    testCompileOnly lombok.lombok
+    testAnnotationProcessor lombok.lombok
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
