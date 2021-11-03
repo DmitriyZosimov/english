@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = {WordDaoHibernateConfig.class, TestH2DB.class})
+@ContextConfiguration(classes = {WordDaoHibernateConfigTest.class, TestH2DB.class})
 @Transactional
 public class WordDaoHibernateIT {
 

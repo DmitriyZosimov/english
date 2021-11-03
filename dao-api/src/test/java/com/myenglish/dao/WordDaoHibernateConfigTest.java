@@ -20,9 +20,9 @@ import java.util.Properties;
 @EnableTransactionManagement
 @Import(TestH2DB.class)
 @PropertySource("classpath:dao-hibernate.properties")
-public class WordDaoHibernateConfig {
+public class WordDaoHibernateConfigTest {
 
-    private static Logger LOGGER = LoggerFactory.getLogger(WordDaoHibernateConfig.class);
+    private static Logger LOGGER = LoggerFactory.getLogger(WordDaoHibernateConfigTest.class);
 
     @Value("${hibernate.dialect}")
     private String dialect;
