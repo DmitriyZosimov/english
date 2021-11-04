@@ -1,15 +1,16 @@
 package com.myenglish.web;
 
 import com.myenglish.web.config.WebConfig;
+import com.myenglish.web.config.WebLocalConfig;
 import com.vaadin.flow.spring.VaadinMVCWebAppInitializer;
 
+import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 
 public class EngWebAppInitializer extends VaadinMVCWebAppInitializer {
     @Override
     protected Collection<Class<?>> getConfigurationClasses() {
-        return Collections.singletonList(WebConfig.class);
+        return Arrays.asList(WebConfig.class, WebLocalConfig.class);
     }
 
 }

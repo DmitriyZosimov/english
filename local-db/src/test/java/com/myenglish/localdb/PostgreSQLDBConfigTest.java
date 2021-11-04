@@ -1,8 +1,5 @@
-package com.myenglish.dao;
+package com.myenglish.localdb;
 
-import com.myenglish.aws.RDSConfig;
-import com.myenglish.dao.config.WordDaoHibernateConfig;
-import org.hibernate.SessionFactory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -11,16 +8,18 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import javax.sql.DataSource;
+
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = {WordDaoHibernateConfig.class, RDSConfig.class})
-@ActiveProfiles("aws")
-public class WordDaoHibernateConfigWithRDSTest {
+@ContextConfiguration(classes = PostgreSQLDBConfig.class)
+@ActiveProfiles("local")
+public class PostgreSQLDBConfigTest {
 
     @Autowired
-    SessionFactory sessionFactory;
+    DataSource dataSource;
 
     @Test
-    public void setupSessionFactory() {
-        Assertions.assertNotNull(sessionFactory);
+    public void setupDataSourceTest() {
+        Assertions.assertNotNull(dataSource);
     }
 }

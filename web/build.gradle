@@ -15,6 +15,7 @@ apply plugin: 'war'
 dependencies {
     implementation project (':model')
     implementation project (':aws-rds')
+    implementation project (':local-db')
     implementation project (':service')
     implementation project (':service-api')
     implementation project (':dao-api')
@@ -26,9 +27,17 @@ dependencies {
         transitive = false
     }
 
-    testCompile spring.test,
+    testImplementation project (':aws-rds')
+    testImplementation project (':local-db')
+    testImplementation project (':service')
+    testImplementation project (':service-api')
+    testImplementation spring.test,
             junit.junit,
             easymock.easymock
 }
 
 defaultTasks("clean", "vaadinBuildFrontend", "build")
+
+tasks.named('test') {
+    useJUnitPlatform()
+}

@@ -1,4 +1,4 @@
-package com.english.aws;
+package com.myenglish.aws;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.aws.context.config.annotation.EnableContextCredentials;
@@ -9,17 +9,19 @@ import org.springframework.cloud.aws.jdbc.datasource.DataSourceFactory;
 import org.springframework.cloud.aws.jdbc.datasource.TomcatJdbcDataSourceFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 
 @Configuration
-@PropertySource("classpath:com/english/aws/aws-config.properties")
+@PropertySource("classpath:com/myenglish/aws/aws-config.properties")
 @EnableContextRegion(region = "${cloud.aws.rds.region}")
 @EnableRdsInstance(dbInstanceIdentifier = "${cloud.aws.rds.dbInstanceIdentifier}",
         password = "${cloud.aws.rds.password}",
         username = "${cloud.aws.rds.username}",
         readReplicaSupport = true, databaseName = "${cloud.aws.rds.databaseName}")
 @EnableContextCredentials(accessKey = "${cloud.aws.accessKey}", secretKey = "${cloud.aws.secretKey}")
+@Profile("aws")
 public class RDSConfig {
 
     @Value("${db.pool.initialSize}")
