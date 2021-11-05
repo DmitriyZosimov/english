@@ -1,6 +1,7 @@
 package com.myenglish.aws;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import javax.sql.DataSource;
 @ContextConfiguration(classes = RDSConfig.class)
 @PropertySource("classpath:com/myenglish/aws/aws-config.properties")
 @ActiveProfiles("aws")
+@Disabled("Commit this annotation after entering aws credentials")
 public class RDSConfigTest {
 
     @Autowired
