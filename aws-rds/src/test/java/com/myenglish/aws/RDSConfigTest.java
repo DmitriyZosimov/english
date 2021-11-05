@@ -16,7 +16,7 @@ import javax.sql.DataSource;
 @ContextConfiguration(classes = RDSConfig.class)
 @PropertySource("classpath:com/myenglish/aws/aws-config.properties")
 @ActiveProfiles("aws")
-@Disabled
+@Disabled("Commit this annotation after entering aws credentials")
 public class RDSConfigTest {
 
     @Autowired
