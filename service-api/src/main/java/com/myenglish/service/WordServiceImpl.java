@@ -2,10 +2,14 @@ package com.myenglish.service;
 
 import com.myenglish.dao.WordDao;
 import com.myenglish.model.Word;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.*;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,6 +18,7 @@ import java.util.Optional;
 public class WordServiceImpl implements WordService {
 
     private WordDao wordDao;
+    private static final String filePath = System.getProperty("user.home") + "/.english/savedWords.txt";
 
     public WordServiceImpl(WordDao wordDao) {
         this.wordDao = wordDao;
@@ -49,6 +54,24 @@ public class WordServiceImpl implements WordService {
 
     @Override
     public Word saveOrUpdateWord(Word word) {
-        return wordDao.saveOrUpdateWord(word);
+        Word savedWord = wordDao.saveOrUpdateWord(word);
+        writeSavedWordToTheFile(savedWord, null);
+        return savedWord;
+    }
+
+    @Transactional(propagation = Propagation.NEVER)
+    @Override
+    public void writeSavedWordToTheFile(Word word, @Nullable File file) {
+        if(file == null) {
+            file = new File(filePath);
+        }
+        String resultString = String.format("('%s', '%s', '%s', '%s'),%n",
+                word.getEnglish(), word.getRussian(), word.getDescription(),
+                word.getDateOfRegistry().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+        try(PrintWriter printWriter = new PrintWriter(new BufferedWriter(new FileWriter(file, true)))) {
+            printWriter.print(resultString);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
