@@ -41,3 +41,12 @@ defaultTasks("clean", "vaadinBuildFrontend", "build")
 tasks.named('test') {
     useJUnitPlatform()
 }
+
+task createEnglishDirectory {
+    mustRunAfter build
+    String userHome = System.getProperty("user.home")
+    def folder = new File(userHome + '/.english')
+    if(!folder.exists()) {
+        folder.mkdirs()
+    }
+}

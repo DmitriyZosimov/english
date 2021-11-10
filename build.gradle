@@ -1,13 +1,3 @@
-plugins {
-    id 'java'
-    id 'war'
-}
-
-group 'com.myenglish'
-version '0.0.1'
-
-sourceCompatibility = 1.8
-
 ext {
 
     easymockVersion = '4.3'
@@ -84,20 +74,12 @@ subprojects {
 
     apply plugin: 'java-library'
 
+    group 'com.myenglish'
+    version '0.0.1'
+
+    sourceCompatibility = 1.8
+
     repositories {
         mavenCentral()
-    }
-}
-
-tasks.named('test') {
-    useJUnitPlatform()
-}
-
-task createEnglishDirectory {
-    mustRunAfter build
-    String userHome = System.getProperty("user.home")
-    def folder = new File(userHome + '/.english')
-    if(!folder.exists()) {
-        folder.mkdirs()
     }
 }
