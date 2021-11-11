@@ -96,15 +96,16 @@ public class MainLayout extends AppLayout{
     }
 
     private List<RouterLink> createLinks() {
-        MenuItemInfo[] menuItems = new MenuItemInfo[]{ //
-                new MenuItemInfo("Home", "la la-globe", HomeView.class), //
-                new MenuItemInfo("Translate from russian", "la la-globe", TranslateFromRussianView.class), //
+        MenuItemInfo[] menuItems = new MenuItemInfo[]{
+                new MenuItemInfo("Home", "la la-globe", HomeView.class),
+                new MenuItemInfo("Translate from russian", "la la-globe", TranslateFromRussianView.class),
 
-                new MenuItemInfo("Add a new word", "la la-arrow-right", AddANewWordView.class), //
+                new MenuItemInfo("Add a new word", "la la-arrow-right", AddANewWordView.class),
 
-                new MenuItemInfo("Edit a word", "la la-arrow-right", EditAWordView.class), //
+                new MenuItemInfo("Edit a word", "la la-arrow-right", EditAWordView.class),
+                new MenuItemInfo("Verbs", "la la-arrow-right", VerbView.class),
 
-                new MenuItemInfo("About", "la la-file", AboutView.class), //
+                new MenuItemInfo("About", "la la-file", AboutView.class),
 
         };
         List<RouterLink> links = new ArrayList<>();

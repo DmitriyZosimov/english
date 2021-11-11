@@ -21,6 +21,7 @@ public class TestH2DB {
             DataSource dataSource =  dbBuilder.setType(EmbeddedDatabaseType.H2)
                     .addScript("db/h2/schema.sql")
                     .addScript("db/h2/data.sql")
+                    .addScript("db/h2/data-verb.sql")
                     .build();
             LOGGER.info("Embedded DataSource was initialized");
             return dataSource;
