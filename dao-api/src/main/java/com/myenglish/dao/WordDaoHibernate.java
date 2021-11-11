@@ -11,11 +11,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository("wordDaoHibernate")
-public class WordDaoHibenrnate implements WordDao, InitializingBean {
+public class WordDaoHibernate implements WordDao, InitializingBean {
 
     private SessionFactory sessionFactory;
 
-    public WordDaoHibenrnate(SessionFactory sessionFactory) {
+    public WordDaoHibernate(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
 

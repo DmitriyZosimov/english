@@ -21,9 +21,9 @@ import java.util.Properties;
 @ComponentScan("com.myenglish.dao")
 @EnableTransactionManagement
 @PropertySource("classpath:dao-hibernate.properties")
-public class WordDaoHibernateConfig {
+public class DaoHibernateConfig {
 
-    private static Logger LOGGER = LoggerFactory.getLogger(WordDaoHibernateConfig.class);
+    private static Logger LOGGER = LoggerFactory.getLogger(DaoHibernateConfig.class);
 
     @Value("${hibernate.dialect}")
     private String dialect;

@@ -1,9 +1,9 @@
 package com.myenglish.service;
 
-import com.myenglish.dao.config.WordDaoHibernateConfig;
+import com.myenglish.dao.config.DaoHibernateConfig;
 import com.myenglish.model.Word;
 import com.myenglish.model.WordFactory;
-import com.myenglish.service.config.WordServiceConfig;
+import com.myenglish.service.config.ServiceConfig;
 import com.myenglish.testdb.TestH2DB;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -18,7 +18,7 @@ import java.io.*;
 import java.time.LocalDate;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = {WordServiceConfig.class, TestH2DB.class, WordDaoHibernateConfig.class})
+@ContextConfiguration(classes = {ServiceConfig.class, TestH2DB.class, DaoHibernateConfig.class})
 @Transactional
 public class WordServiceImplTest {
 

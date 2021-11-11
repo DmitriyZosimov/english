@@ -5,5 +5,5 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @ComponentScan({"com.myenglish.service"})
-public class WordServiceConfig {
+public class ServiceConfig {
 }
