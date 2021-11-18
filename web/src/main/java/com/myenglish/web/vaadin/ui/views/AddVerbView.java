@@ -117,23 +117,6 @@ public class AddVerbView extends VerticalLayout implements AddingView {
         return div;
     }
 
-    private TextField buildTextField() {
-        TextField textField = new TextField();
-        textField.setPlaceholder("write a word");
-        textField.setClearButtonVisible(true);
-        textField.setWidth("400");
-        return textField;
-    }
-
-    private Div createPlusButton() {
-        Div div = new Div();
-        Icon icon = new Icon(VaadinIcon.PLUS);
-        Button plusButton = new Button(icon);
-        plusButton.addClickListener(event -> addComponentAtIndex(getComponentCount() - 2, createFormLayout()));
-        div.add(plusButton);
-        return div;
-    }
-
     private Div createSaveButton() {
         Div div = new Div();
         Button saveButton = new Button("Save");

@@ -8,9 +8,6 @@ import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.H2;
-import com.vaadin.flow.component.icon.Icon;
-import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextArea;
@@ -100,23 +97,6 @@ public class AddANewWordView extends VerticalLayout implements AddingView {
         HorizontalLayout inputHorizontalLayout = new HorizontalLayout();
         inputHorizontalLayout.addAndExpand(layoutWithBinder, trash);
         div.add(inputHorizontalLayout);
-        return div;
-    }
-
-    private TextField buildTextField() {
-        TextField textField = new TextField();
-        textField.setPlaceholder("write a word");
-        textField.setClearButtonVisible(true);
-        textField.setWidth("400");
-        return textField;
-    }
-
-    private Div createPlusButton() {
-        Div div = new Div();
-        Icon icon = new Icon(VaadinIcon.PLUS);
-        Button plusButton = new Button(icon);
-        plusButton.addClickListener(event -> addComponentAtIndex(getComponentCount() - 2, createFormLayout()));
-        div.add(plusButton);
         return div;
     }
 
