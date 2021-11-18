@@ -104,6 +104,7 @@ public class MainLayout extends AppLayout{
 
                 new MenuItemInfo("Edit a word", "la la-arrow-right", EditAWordView.class),
                 new MenuItemInfo("Verbs", "la la-arrow-right", VerbView.class),
+                new MenuItemInfo("Add a verb", "la la-arrow-right", AddVerbView.class),
 
                 new MenuItemInfo("About", "la la-file", AboutView.class),
 
