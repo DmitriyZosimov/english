@@ -86,16 +86,10 @@ public class AddANewWordView extends VerticalLayout implements AddingView {
 
         savedBinders.add(binder);
 
-        Icon icon = new Icon(VaadinIcon.TRASH);
-        Button trash = new Button(icon);
-        trash.addClickListener(event -> {
-            if(savedBinders.contains(binder)) {
-                savedBinders.remove(binder);
-            }
-            div.removeAll();
-        });
+        Div trashButtonDiv = ButtonTools.createTrashButtonInFormLayout(savedBinders, binder, div);
+
         HorizontalLayout inputHorizontalLayout = new HorizontalLayout();
-        inputHorizontalLayout.addAndExpand(layoutWithBinder, trash);
+        inputHorizontalLayout.addAndExpand(layoutWithBinder, trashButtonDiv);
         div.add(inputHorizontalLayout);
         return div;
     }
