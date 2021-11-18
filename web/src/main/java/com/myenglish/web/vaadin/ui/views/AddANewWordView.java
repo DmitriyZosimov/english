@@ -29,7 +29,7 @@ import java.util.Queue;
 
 @PageTitle("Add a new word")
 @Route(value = "word/new", layout = MainLayout.class)
-public class AddANewWordView extends VerticalLayout {
+public class AddANewWordView extends VerticalLayout implements AddingView {
 
     private static final String MAIN_LABEL = "You can add a new words here";
 
@@ -43,8 +43,12 @@ public class AddANewWordView extends VerticalLayout {
         createContent();
     }
 
-    protected void createContent() {
-        add(LabelTools.createMainLabel(MAIN_LABEL), createFormLayout(), createPlusButton(), createSaveButton());
+    @Override
+    public void createContent() {
+        add(LabelTools.createMainLabel(MAIN_LABEL),
+                createFormLayout(),
+                ButtonTools.createPlusButton(this, this),
+                createSaveButton());
     }
 
     private Div createFormLayout() {

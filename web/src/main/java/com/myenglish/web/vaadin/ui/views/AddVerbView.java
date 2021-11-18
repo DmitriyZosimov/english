@@ -27,7 +27,7 @@ import java.util.Queue;
 
 @PageTitle("Add a new verb")
 @Route(value = "verbs/new", layout = MainLayout.class)
-public class AddVerbView extends VerticalLayout {
+public class AddVerbView extends VerticalLayout implements AddingView {
 
     private static final String MAIN_LABEL = "You can add a new verb here";
 
@@ -41,8 +41,12 @@ public class AddVerbView extends VerticalLayout {
         createContent();
     }
 
-    protected void createContent() {
-        add(LabelTools.createMainLabel(MAIN_LABEL), createFormLayout(), createPlusButton(), createSaveButton());
+    @Override
+    public void createContent() {
+        add(LabelTools.createMainLabel(MAIN_LABEL),
+                createFormLayout(),
+                ButtonTools.createPlusButton(this, this),
+                createSaveButton());
     }
 
     private Div createFormLayout() {

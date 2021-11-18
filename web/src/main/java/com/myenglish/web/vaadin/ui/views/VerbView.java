@@ -25,7 +25,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 @PageTitle("Verbs")
 @Route(value = "verbs", layout = MainLayout.class)
-public class VerbView extends VerticalLayout {
+public class VerbView extends VerticalLayout implements View {
 
     private VerbService verbService;
     private VerticalLayout mainLayout;
@@ -38,7 +38,8 @@ public class VerbView extends VerticalLayout {
         createContent();
     }
 
-    protected void createContent() {
+    @Override
+    public void createContent() {
         removeAll();
         add(buildMainLayout(), buildSupportLayout());
     }

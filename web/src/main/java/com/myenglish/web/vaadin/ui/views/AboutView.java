@@ -8,5 +8,10 @@ import com.vaadin.flow.router.RouteAlias;
 
 @PageTitle("About")
 @Route(value = "about", layout = MainLayout.class)
-public class AboutView extends VerticalLayout {
+public class AboutView extends VerticalLayout implements View {
+
+    @Override
+    public void createContent() {
+
+    }
 }

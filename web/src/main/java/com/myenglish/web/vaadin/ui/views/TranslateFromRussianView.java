@@ -30,7 +30,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 @PageTitle("Translate from russian")
 @Route(value = "translate/ru", layout = MainLayout.class)
-public class TranslateFromRussianView extends VerticalLayout {
+public class TranslateFromRussianView extends VerticalLayout implements View {
 
     private WordService wordService;
 
@@ -46,7 +46,8 @@ public class TranslateFromRussianView extends VerticalLayout {
         createContent();
     }
 
-    protected void createContent() {
+    @Override
+    public void createContent() {
         removeAll();
         add(buildTestModeMainLayout(), buildSupportLayout());
     }
