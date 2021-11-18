@@ -3,12 +3,12 @@ package com.myenglish.web.vaadin.ui.views;
 import com.myenglish.model.Verb;
 import com.myenglish.service.VerbService;
 import com.myenglish.web.vaadin.ui.MainLayout;
+import com.myenglish.web.vaadin.ui.utils.LabelTools;
 import com.myenglish.web.vaadin.ui.utils.ValidationPredicates;
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -29,6 +29,8 @@ import java.util.Queue;
 @Route(value = "verbs/new", layout = MainLayout.class)
 public class AddVerbView extends VerticalLayout {
 
+    private static final String MAIN_LABEL = "You can add a new verb here";
+
     private VerbService verbService;
     private Queue<Binder<Verb>> savedBinders;
 
@@ -40,7 +42,7 @@ public class AddVerbView extends VerticalLayout {
     }
 
     protected void createContent() {
-        add(createMainLabel(), createFormLayout(), createPlusButton(), createSaveButton());
+        add(LabelTools.createMainLabel(MAIN_LABEL), createFormLayout(), createPlusButton(), createSaveButton());
     }
 
     private Div createFormLayout() {
@@ -150,13 +152,6 @@ public class AddVerbView extends VerticalLayout {
             }
         });
         div.add(saveButton);
-        return div;
-    }
-
-    private Div createMainLabel() {
-        Div div = new Div();
-        H2 text = new H2("You can add a new verb here");
-        div.add(text);
         return div;
     }
 }

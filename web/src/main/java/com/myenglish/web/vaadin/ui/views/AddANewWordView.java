@@ -3,6 +3,7 @@ package com.myenglish.web.vaadin.ui.views;
 import com.myenglish.model.Word;
 import com.myenglish.service.WordService;
 import com.myenglish.web.vaadin.ui.MainLayout;
+import com.myenglish.web.vaadin.ui.utils.LabelTools;
 import com.myenglish.web.vaadin.ui.utils.ValidationPredicates;
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.button.Button;
@@ -30,6 +31,8 @@ import java.util.Queue;
 @Route(value = "word/new", layout = MainLayout.class)
 public class AddANewWordView extends VerticalLayout {
 
+    private static final String MAIN_LABEL = "You can add a new words here";
+
     private WordService wordService;
     private Queue<Binder<Word>> savedBinders;
 
@@ -41,7 +44,7 @@ public class AddANewWordView extends VerticalLayout {
     }
 
     protected void createContent() {
-        add(createMainLabel(), createFormLayout(), createPlusButton(), createSaveButton());
+        add(LabelTools.createMainLabel(MAIN_LABEL), createFormLayout(), createPlusButton(), createSaveButton());
     }
 
     private Div createFormLayout() {
@@ -135,13 +138,6 @@ public class AddANewWordView extends VerticalLayout {
             }
         });
         div.add(saveButton);
-        return div;
-    }
-
-    private Div createMainLabel() {
-        Div div = new Div();
-        H2 text = new H2("You can add new words here");
-        div.add(text);
         return div;
     }
 }
