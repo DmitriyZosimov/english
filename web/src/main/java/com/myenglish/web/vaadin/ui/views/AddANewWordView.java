@@ -50,7 +50,8 @@ public class AddANewWordView extends VerticalLayout implements AddingView {
                 createSaveButton());
     }
 
-    private Div createFormLayout() {
+    @Override
+    public Div createFormLayout() {
         Div div = new Div();
 
         TextField englishField = TextFieldTools.buildTextField();

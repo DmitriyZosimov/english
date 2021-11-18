@@ -48,7 +48,8 @@ public class AddVerbView extends VerticalLayout implements AddingView {
                 createSaveButton());
     }
 
-    private Div createFormLayout() {
+    @Override
+    public Div createFormLayout() {
         Div div = new Div();
 
         TextField firstFormField = TextFieldTools.buildTextField();
