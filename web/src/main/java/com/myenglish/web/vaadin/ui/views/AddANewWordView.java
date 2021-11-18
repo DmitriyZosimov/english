@@ -54,9 +54,7 @@ public class AddANewWordView extends VerticalLayout implements AddingView {
         TextField englishField = TextFieldTools.buildTextField();
         TextField russianField = TextFieldTools.buildTextField();
 
-        TextArea descriptionArea = new TextArea();
-        descriptionArea.setPlaceholder("write a description (optional)");
-        descriptionArea.setClearButtonVisible(true);
+        TextArea descriptionArea = TextAreaTools.buildDescriptionArea();
 
         FormLayout layoutWithBinder = new FormLayout();
         Binder<Word> binder = new Binder<>();
