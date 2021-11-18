@@ -3,6 +3,7 @@ package com.myenglish.web.vaadin.ui.views;
 import com.myenglish.model.Word;
 import com.myenglish.service.WordService;
 import com.myenglish.web.vaadin.ui.MainLayout;
+import com.myenglish.web.vaadin.ui.utils.ValidationPredicates;
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.formlayout.FormLayout;
@@ -23,8 +24,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.LinkedList;
 import java.util.Queue;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 
 @PageTitle("Add a new word")
@@ -62,29 +61,16 @@ public class AddANewWordView extends VerticalLayout {
         layoutWithBinder.addFormItem(russianField, "russian translation");
         layoutWithBinder.addFormItem(descriptionArea, "description");
 
-        SerializablePredicate<String> englishOrRussianPredicate = value -> !englishField
-                .getValue().trim().isEmpty()
-                || !russianField.getValue().trim().isEmpty();
-
-        SerializablePredicate<String> englishPatternPredicate = value -> {
-            Pattern pattern = Pattern.compile("[a-zA-Z' -]+");
-            Matcher matcher = pattern.matcher(value);
-            return matcher.matches();
-        };
-
-        SerializablePredicate<String> russianPatternPredicate = value -> {
-            Pattern pattern = Pattern.compile("[а-яА-Я -]+");
-            Matcher matcher = pattern.matcher(value);
-            return matcher.matches();
-        };
+        SerializablePredicate<String> englishPatternPredicate = ValidationPredicates.buildEnglishPatternPredicate();
+        SerializablePredicate<String> russianPatternPredicate = ValidationPredicates.buildRussianPatternPredicate();
 
         Binder.Binding<Word, String> englishBinding = binder.forField(englishField)
-                .withValidator(englishOrRussianPredicate, "The field must not be null")
+                .withValidator(ValidationPredicates.buildCheckEmptyTextField(englishField), "The field must not be null")
                 .withValidator(englishPatternPredicate, "The word was write incorrectly")
                 .bind(Word::getEnglish, Word::setEnglish);
 
         Binder.Binding<Word, String> russianBinding = binder.forField(russianField)
-                .withValidator(englishOrRussianPredicate, "The field must not be null")
+                .withValidator(ValidationPredicates.buildCheckEmptyTextField(russianField), "The field must not be null")
                 .withValidator(russianPatternPredicate, "The word was write incorrectly")
                 .bind(Word::getRussian, Word::setRussian);
 

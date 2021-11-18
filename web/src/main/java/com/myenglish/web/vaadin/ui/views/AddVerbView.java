@@ -3,6 +3,7 @@ package com.myenglish.web.vaadin.ui.views;
 import com.myenglish.model.Verb;
 import com.myenglish.service.VerbService;
 import com.myenglish.web.vaadin.ui.MainLayout;
+import com.myenglish.web.vaadin.ui.utils.ValidationPredicates;
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.formlayout.FormLayout;
@@ -23,8 +24,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.LinkedList;
 import java.util.Queue;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 @PageTitle("Add a new verb")
 @Route(value = "verbs/new", layout = MainLayout.class)
@@ -65,41 +64,26 @@ public class AddVerbView extends VerticalLayout {
         layoutWithBinder.addFormItem(thirdFormField, "Past Participle");
         layoutWithBinder.addFormItem(descriptionArea, "description");
 
-        SerializablePredicate<String> englishOrRussianPredicate = value -> !firstFormField
-                .getValue().trim().isEmpty()
-                || !secondFormField.getValue().trim().isEmpty()
-                || !thirdFormField.getValue().trim().isEmpty()
-                || !russianField.getValue().trim().isEmpty();
-
-        SerializablePredicate<String> englishPatternPredicate = value -> {
-            Pattern pattern = Pattern.compile("[a-zA-Z' -]+");
-            Matcher matcher = pattern.matcher(value);
-            return matcher.matches();
-        };
-
-        SerializablePredicate<String> russianPatternPredicate = value -> {
-            Pattern pattern = Pattern.compile("[а-яА-Я -]+");
-            Matcher matcher = pattern.matcher(value);
-            return matcher.matches();
-        };
+        SerializablePredicate<String> englishPatternPredicate = ValidationPredicates.buildEnglishPatternPredicate();
+        SerializablePredicate<String> russianPatternPredicate = ValidationPredicates.buildRussianPatternPredicate();
 
         Binder.Binding<Verb, String> firstFormBinding = binder.forField(firstFormField)
-                .withValidator(englishOrRussianPredicate, "The field must not be null")
+                .withValidator(ValidationPredicates.buildCheckEmptyTextField(firstFormField), "The field must not be null")
                 .withValidator(englishPatternPredicate, "The word was write incorrectly")
                 .bind(Verb::getFirstForm, Verb::setFirstForm);
 
         Binder.Binding<Verb, String> secondFormBinding = binder.forField(secondFormField)
-                .withValidator(englishOrRussianPredicate, "The field must not be null")
+                .withValidator(ValidationPredicates.buildCheckEmptyTextField(secondFormField), "The field must not be null")
                 .withValidator(englishPatternPredicate, "The word was write incorrectly")
                 .bind(Verb::getSecondForm, Verb::setSecondForm);
 
-        Binder.Binding<Verb, String> thridFormBinding = binder.forField(thirdFormField)
-                .withValidator(englishOrRussianPredicate, "The field must not be null")
+        Binder.Binding<Verb, String> thirdFormBinding = binder.forField(thirdFormField)
+                .withValidator(ValidationPredicates.buildCheckEmptyTextField(thirdFormField), "The field must not be null")
                 .withValidator(englishPatternPredicate, "The word was write incorrectly")
                 .bind(Verb::getThirdForm, Verb::setThirdForm);
 
         Binder.Binding<Verb, String> russianBinding = binder.forField(russianField)
-                .withValidator(englishOrRussianPredicate, "The field must not be null")
+                .withValidator(ValidationPredicates.buildCheckEmptyTextField(russianField), "The field must not be null")
                 .withValidator(russianPatternPredicate, "The word was write incorrectly")
                 .bind(Verb::getRussian, Verb::setRussian);
 
@@ -108,7 +92,7 @@ public class AddVerbView extends VerticalLayout {
 
         firstFormField.addValueChangeListener(event -> firstFormBinding.validate());
         secondFormField.addValueChangeListener(event -> secondFormBinding.validate());
-        thirdFormField.addValueChangeListener(event -> thridFormBinding.validate());
+        thirdFormField.addValueChangeListener(event -> thirdFormBinding.validate());
         russianField.addValueChangeListener(event -> russianBinding.validate());
 
         savedBinders.add(binder);
