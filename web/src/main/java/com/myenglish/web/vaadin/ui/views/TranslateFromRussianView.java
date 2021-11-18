@@ -3,16 +3,14 @@ package com.myenglish.web.vaadin.ui.views;
 import com.myenglish.model.Word;
 import com.myenglish.service.WordService;
 import com.myenglish.web.vaadin.ui.MainLayout;
+import com.myenglish.web.vaadin.ui.utils.DialogTools;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.Unit;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
-import com.vaadin.flow.component.datepicker.DatePicker;
-import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H3;
-import com.vaadin.flow.component.html.H6;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
@@ -159,7 +157,7 @@ public class TranslateFromRussianView extends VerticalLayout implements View {
 
         Button selectDateButton = new Button("Select date");
         selectDateButton.addClickListener(event -> {
-            buildDialogForDate().open();
+            DialogTools.buildDialogForDate(dateFrom, this).open();
         });
 
         Button testModeButton = new Button("Test mode");
@@ -182,27 +180,6 @@ public class TranslateFromRussianView extends VerticalLayout implements View {
 
         supportLayout.add(selectDateButton, testModeButton, inputModeButton);
         return supportLayout;
-    }
-
-    private Dialog buildDialogForDate() {
-        Dialog dialog = new Dialog();
-        dialog.add(new Text("You can choose date from when words are added."));
-        dialog.setCloseOnEsc(true);
-        dialog.setCloseOnOutsideClick(true);
-
-        DatePicker datePicker = new DatePicker();
-        Button confirmButton = new Button("Confirm", event -> {
-            dateFrom = datePicker.getValue();
-            dialog.close();
-            createContent();
-        });
-
-        Button cancelButton = new Button("Cancel", event -> {
-            dialog.close();
-        });
-
-        dialog.add(new Div(datePicker), new Div( confirmButton, cancelButton));
-        return dialog;
     }
 
     private List<Word> getWordsList() {
