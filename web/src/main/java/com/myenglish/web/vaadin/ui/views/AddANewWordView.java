@@ -3,8 +3,7 @@ package com.myenglish.web.vaadin.ui.views;
 import com.myenglish.model.Word;
 import com.myenglish.service.WordService;
 import com.myenglish.web.vaadin.ui.MainLayout;
-import com.myenglish.web.vaadin.ui.utils.LabelTools;
-import com.myenglish.web.vaadin.ui.utils.ValidationPredicates;
+import com.myenglish.web.vaadin.ui.utils.*;
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.formlayout.FormLayout;
@@ -54,8 +53,8 @@ public class AddANewWordView extends VerticalLayout implements AddingView {
     private Div createFormLayout() {
         Div div = new Div();
 
-        TextField englishField = buildTextField();
-        TextField russianField = buildTextField();
+        TextField englishField = TextFieldTools.buildTextField();
+        TextField russianField = TextFieldTools.buildTextField();
 
         TextArea descriptionArea = new TextArea();
         descriptionArea.setPlaceholder("write a description (optional)");
