@@ -1,0 +1,37 @@
+apply plugin: 'war'
+
+dependencies {
+    implementation project (':model')
+    implementation project (':aws-rds')
+    implementation project (':local-db')
+    implementation project (':service')
+    implementation project (':service-api')
+    implementation project (':dao-api')
+
+    implementation spring.web,
+            spring.webmvc,
+            javax.servlet
+
+    testImplementation project (':aws-rds')
+    testImplementation project (':local-db')
+    testImplementation project (':service')
+    testImplementation project (':service-api')
+    testImplementation spring.test,
+            junit.junit,
+            easymock.easymock
+}
+
+defaultTasks("clean", "build")
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+
+task createEnglishDirectory {
+    mustRunAfter build
+    String userHome = System.getProperty("user.home")
+    def folder = new File(userHome + '/.english')
+    if(!folder.exists()) {
+        folder.mkdirs()
+    }
+}
