@@ -10,7 +10,8 @@ dependencies {
 
     implementation spring.web,
             spring.webmvc,
-            javax.servlet
+            javax.servlet,
+            jackson.databind
 
     testImplementation project (':aws-rds')
     testImplementation project (':local-db')
