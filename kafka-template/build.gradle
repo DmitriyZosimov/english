@@ -1,0 +1,16 @@
+subprojects {
+    dependencies {
+        implementation spring.context,
+                spring_kafka.spring_kafka,
+                jackson.databind
+
+        testImplementation spring.test,
+                junit.junit,
+                mockito.junit_jupiter,
+                spring_kafka.test
+    }
+
+    tasks.named('test') {
+        useJUnitPlatform()
+    }
+}

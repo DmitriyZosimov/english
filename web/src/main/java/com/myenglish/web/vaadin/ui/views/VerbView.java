@@ -3,6 +3,7 @@ package com.myenglish.web.vaadin.ui.views;
 import com.myenglish.model.Verb;
 import com.myenglish.service.VerbService;
 import com.myenglish.web.vaadin.ui.MainLayout;
+import com.myenglish.web.vaadin.ui.statistics.SimpleStatistic;
 import com.myenglish.web.vaadin.ui.utils.DialogTools;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.Text;
@@ -30,6 +31,7 @@ public class VerbView extends VerticalLayout implements View {
 
     private VerbService verbService;
     private VerticalLayout mainLayout;
+    private SimpleStatistic simpleStatistic;
 
     private LocalDate dateFrom;
 
@@ -90,9 +92,11 @@ public class VerbView extends VerticalLayout implements View {
             if(firstForm.get() && secondForm.get() && thirdForm.get()) {
                 icon = new Icon(VaadinIcon.CHECK);
                 icon.setColor("green");
+                simpleStatistic.setCount(true);
             } else {
                 icon = new Icon(VaadinIcon.CLOSE_SMALL);
                 icon.setColor("red");
+                simpleStatistic.setCount(false);
             }
             textFieldLayout.add(icon);
         });
@@ -127,7 +131,9 @@ public class VerbView extends VerticalLayout implements View {
             DialogTools.buildDialogForDate(dateFrom, this).open();
         });
 
-        supportLayout.add(selectDateButton);
+        simpleStatistic = new SimpleStatistic(this);
+
+        supportLayout.add(selectDateButton, simpleStatistic);
         return supportLayout;
     }
 

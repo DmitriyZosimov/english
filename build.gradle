@@ -4,13 +4,16 @@ ext {
     h2Version = '1.4.200'
     hibernateVersion = '5.5.7.Final'
     hibernateValidatorVersion = '7.0.1.Final'
+    jacksonVersion = '2.13.1'
+    javaxServletVersion = '3.1.0'
     junitVersion = '5.7.2'
     logbackVersion = '1.2.5'
     lombokVersion = '1.18.20'
     mockitoVersion = '3.12.4'
     postgresqlVersion = '42.3.1'
-    springVersion = '5.2.16.RELEASE'
+    springVersion = '5.2.19.RELEASE'
     springCloudVersion = '2.2.6.RELEASE'
+    springKafkaVersion = '2.6.13'
     vaadinVersion = '20.0.7'
     vaadinSpringVersion = '18.0.0'
 
@@ -26,6 +29,14 @@ ext {
             validator   : "org.hibernate.validator:hibernate-validator:$hibernateValidatorVersion",
             ehcache     : "org.hibernate:hibernate-ehcache:$hibernateVersion",
             em          : "org.hibernate:hibernate-entitymanager:$hibernateVersion"
+    ]
+
+    jackson = [
+            databind    : "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$jacksonVersion"
+    ]
+
+    javax = [
+        servlet : "javax.servlet:javax.servlet-api:$javaxServletVersion"
     ]
 
     junit = [
@@ -64,6 +75,11 @@ ext {
             jdbc        : "org.springframework.cloud:spring-cloud-aws-jdbc:$springCloudVersion"
     ]
 
+    spring_kafka = [
+            spring_kafka    : "org.springframework.kafka:spring-kafka:$springKafkaVersion",
+            test            : "org.springframework.kafka:spring-kafka-test:$springKafkaVersion"
+    ]
+
     vaadin_libs = [
             vaadin          : "com.vaadin:vaadin:$vaadinVersion",
             vaadin_spring   : "com.vaadin:vaadin-spring:$vaadinSpringVersion"
@@ -73,6 +89,7 @@ ext {
 subprojects {
 
     apply plugin: 'java-library'
+    apply plugin: 'idea'
 
     group 'com.myenglish'
     version '0.0.1'
