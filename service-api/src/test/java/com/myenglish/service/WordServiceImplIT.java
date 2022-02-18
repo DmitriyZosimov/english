@@ -20,7 +20,7 @@ import java.time.LocalDate;
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {ServiceConfig.class, TestH2DB.class, DaoHibernateConfig.class})
 @Transactional
-public class WordServiceImplTest {
+public class WordServiceImplIT {
 
     @Autowired
     WordService wordService;
