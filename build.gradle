@@ -11,8 +11,9 @@ ext {
     lombokVersion = '1.18.20'
     mockitoVersion = '3.12.4'
     postgresqlVersion = '42.3.1'
-    springVersion = '5.2.16.RELEASE'
+    springVersion = '5.2.19.RELEASE'
     springCloudVersion = '2.2.6.RELEASE'
+    springKafkaVersion = '2.6.13'
     vaadinVersion = '20.0.7'
     vaadinSpringVersion = '18.0.0'
 
@@ -74,6 +75,11 @@ ext {
             jdbc        : "org.springframework.cloud:spring-cloud-aws-jdbc:$springCloudVersion"
     ]
 
+    spring_kafka = [
+            spring_kafka    : "org.springframework.kafka:spring-kafka:$springKafkaVersion",
+            test            : "org.springframework.kafka:spring-kafka-test:$springKafkaVersion"
+    ]
+
     vaadin_libs = [
             vaadin          : "com.vaadin:vaadin:$vaadinVersion",
             vaadin_spring   : "com.vaadin:vaadin-spring:$vaadinSpringVersion"
@@ -83,6 +89,7 @@ ext {
 subprojects {
 
     apply plugin: 'java-library'
+    apply plugin: 'idea'
 
     group 'com.myenglish'
     version '0.0.1'

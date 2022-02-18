@@ -6,6 +6,7 @@ dependencies {
     implementation project(":dao")
     implementation project(":dao-api")
     implementation project(":test-db")
+    implementation project(":kafka-template:logger-producer")
 
     implementation spring.context,
             spring.tx,

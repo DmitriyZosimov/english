@@ -9,4 +9,8 @@ include 'web'
 include 'aws-rds'
 include 'local-db'
 include 'web-angular'
+include 'kafka-template:logger-consumer'
+findProject(':kafka-template:logger-consumer')?.name = 'logger-consumer'
+include 'kafka-template:logger-producer'
+findProject(':kafka-template:logger-producer')?.name = 'logger-producer'
 
