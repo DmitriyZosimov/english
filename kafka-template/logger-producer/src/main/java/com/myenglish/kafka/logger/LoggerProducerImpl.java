@@ -3,6 +3,7 @@ package com.myenglish.kafka.logger;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.common.header.Header;
 import org.apache.kafka.common.header.internals.RecordHeader;
+import org.springframework.context.annotation.Profile;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
 import org.springframework.stereotype.Component;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 @Component
+@Profile("kafka")
 public class LoggerProducerImpl implements LoggerProducer {
 
     private KafkaTemplate<String, String> kafkaTemplate;

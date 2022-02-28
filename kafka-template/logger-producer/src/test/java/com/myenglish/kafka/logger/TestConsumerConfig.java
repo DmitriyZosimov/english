@@ -5,6 +5,7 @@ import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.kafka.annotation.EnableKafka;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.config.KafkaListenerContainerFactory;
@@ -18,6 +19,7 @@ import java.util.Map;
 @Configuration
 @EnableKafka
 @ComponentScan
+@Profile("kafka")
 public class TestConsumerConfig {
 
     @Bean

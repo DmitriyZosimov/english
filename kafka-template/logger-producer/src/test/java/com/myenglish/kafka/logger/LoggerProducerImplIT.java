@@ -10,6 +10,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.test.context.EmbeddedKafka;
 import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -25,6 +26,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @EmbeddedKafka(partitions = 1, topics = "logger", brokerProperties = {"listeners=PLAINTEXT://localhost:9089", "port=9089"})
 @TestPropertySource(locations = {"classpath:logger-producer-test.properties"})
 @ContextConfiguration(classes = {LoggerProducerConfig.class, TestConsumerConfig.class})
+@ActiveProfiles("kafka")
 public class LoggerProducerImplIT {
 
     @Autowired
