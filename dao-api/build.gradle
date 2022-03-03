@@ -5,7 +5,7 @@ dependencies {
     implementation project (':dao')
     implementation spring.context,
             spring.orm,
-            logback.logback,
+            logback.classic,
             hibernate.em
 
     testImplementation project (':test-db')

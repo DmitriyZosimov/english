@@ -10,7 +10,7 @@ dependencies {
 
     implementation spring.context,
             spring.tx,
-            logback.logback
+            logback.classic
 
     testImplementation project(":test-db")
     testImplementation spring.test,
