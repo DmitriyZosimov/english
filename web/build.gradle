@@ -33,7 +33,6 @@ dependencies {
     testImplementation project (':local-db')
     testImplementation project (':service')
     testImplementation project (':service-api')
-    testImplementation project(':kafka-template:logger-producer')
     testImplementation spring.test,
             junit.junit,
             easymock.easymock
