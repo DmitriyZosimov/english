@@ -1,6 +1,7 @@
 package com.myenglish.service;
 
 import com.myenglish.dao.config.DaoHibernateConfig;
+import com.myenglish.kafka.logger.LoggerProducerWithoutKafkaConfig;
 import com.myenglish.model.Word;
 import com.myenglish.model.WordFactory;
 import com.myenglish.service.config.ServiceConfig;
@@ -9,6 +10,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Propagation;
@@ -18,8 +20,10 @@ import java.io.*;
 import java.time.LocalDate;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = {ServiceConfig.class, TestH2DB.class, DaoHibernateConfig.class})
+@ContextConfiguration(classes = {ServiceConfig.class, TestH2DB.class, DaoHibernateConfig.class,
+        LoggerProducerWithoutKafkaConfig.class})
 @Transactional
+@ActiveProfiles("withoutKafka")
 public class WordServiceImplIT {
 
     @Autowired
