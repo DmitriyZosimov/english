@@ -17,7 +17,7 @@ import java.sql.SQLException;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = WebConfig.class)
-@ActiveProfiles("aws")
+@ActiveProfiles(profiles = {"aws", "withoutKafka"})
 @Disabled("Commit this annotation after entering aws credentials")
 public class WebAwsConfigTest {
 

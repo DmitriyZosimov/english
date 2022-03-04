@@ -1,0 +1,5 @@
+apply plugin : 'java'
+
+dependencies {
+    testImplementation mockito.junit_jupiter
+}

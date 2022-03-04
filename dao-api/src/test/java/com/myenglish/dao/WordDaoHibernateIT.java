@@ -1,5 +1,6 @@
 package com.myenglish.dao;
 
+import com.myenglish.kafka.logger.LoggerProducerWithoutKafkaConfig;
 import com.myenglish.model.Word;
 import com.myenglish.model.WordFactory;
 import com.myenglish.testdb.TestH2DB;
@@ -7,6 +8,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,7 +17,8 @@ import java.util.List;
 import java.util.Optional;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = {WordDaoHibernateConfigTest.class, TestH2DB.class})
+@ContextConfiguration(classes = {WordDaoHibernateConfigTest.class, TestH2DB.class, LoggerProducerWithoutKafkaConfig.class})
+@ActiveProfiles("withoutKafka")
 @Transactional
 public class WordDaoHibernateIT {
 

@@ -1,3 +1,3 @@
 dependencies {
-    implementation spring.context, spring.jdbc, logback.logback, h2.h2
+    implementation spring.context, spring.jdbc, logback.classic, h2.h2
 }

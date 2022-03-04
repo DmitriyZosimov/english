@@ -3,9 +3,10 @@ apply plugin: 'java'
 dependencies {
     implementation project (':model')
     implementation project (':dao')
+    implementation project (':kafka-template:logger-producer')
     implementation spring.context,
             spring.orm,
-            logback.logback,
+            logback.classic,
             hibernate.em
 
     testImplementation project (':test-db')

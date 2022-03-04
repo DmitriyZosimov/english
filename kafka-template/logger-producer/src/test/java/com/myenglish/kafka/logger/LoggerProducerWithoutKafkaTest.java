@@ -9,15 +9,17 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = {LoggerProducerConfig.class})
-@ActiveProfiles("kafka")
-public class ContextTest {
+@ContextConfiguration(classes = {LoggerProducerWithoutKafkaConfig.class})
+@ActiveProfiles("withoutKafka")
+public class LoggerProducerWithoutKafkaTest {
 
     @Autowired
-    LoggerProducer producer;
+    LoggerProducer loggerProducer;
 
     @Test
-    public void setupTest() {
-        Assertions.assertNotNull(producer);
+    public void testContext() {
+        Assertions.assertTrue(loggerProducer instanceof LoggerProducerWithoutKafka);
     }
+
+
 }

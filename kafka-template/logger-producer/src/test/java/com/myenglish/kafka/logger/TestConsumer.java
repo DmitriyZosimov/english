@@ -3,10 +3,12 @@ package com.myenglish.kafka.logger;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.util.concurrent.CountDownLatch;
 
 @Component
+@ActiveProfiles("kafka")
 public class TestConsumer {
 
     private ConsumerRecord<String, String> record;

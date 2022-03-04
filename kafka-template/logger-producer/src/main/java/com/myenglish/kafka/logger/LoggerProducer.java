@@ -14,7 +14,7 @@ public interface LoggerProducer {
      *
      * @param message - value of a record
      */
-    void sendLog(String message);
+    void sendLog(String message, Class<?> clazz);
 
     /**
      * Send log message as a value with key
@@ -22,7 +22,7 @@ public interface LoggerProducer {
      * @param message value of a record
      * @param key     key of a record
      */
-    void sendLog(String message, String key);
+    void sendLog(String message, Class<?> clazz, String key);
 
     /**
      * Send log message as a value with key and headers
@@ -31,14 +31,14 @@ public interface LoggerProducer {
      * @param key     key of a record
      * @param headers headers of a record
      */
-    void sendLog(String message, String key, Collection<Header> headers);
+    void sendLog(String message, Class<?> clazz, String key, Collection<Header> headers);
 
     /**
      * Send log message with {@link LoggerLevel} TRACE logger level
      *
      * @param message - value of a record
      */
-    void trace(String message);
+    void trace(String message, Class<?> clazz);
 
     /**
      * Send log message as a value with key and {@link LoggerLevel} TRACE logger level
@@ -46,7 +46,7 @@ public interface LoggerProducer {
      * @param message value of a record
      * @param key     key of a record
      */
-    void trace(String message, String key);
+    void trace(String message, Class<?> clazz, String key);
 
     /**
      * Send log message as a value with key, headers and {@link LoggerLevel} TRACE logger level
@@ -55,14 +55,14 @@ public interface LoggerProducer {
      * @param key     key of a record
      * @param headers headers of a record
      */
-    void trace(String message, String key, Collection<Header> headers);
+    void trace(String message, Class<?> clazz, String key, Collection<Header> headers);
 
     /**
      * Send log message with {@link LoggerLevel} DEBUG logger level
      *
      * @param message - value of a record
      */
-    void debug(String message);
+    void debug(String message, Class<?> clazz);
 
     /**
      * Send log message as a value with key and {@link LoggerLevel} DEBUG logger level
@@ -70,7 +70,7 @@ public interface LoggerProducer {
      * @param message value of a record
      * @param key     key of a record
      */
-    void debug(String message, String key);
+    void debug(String message, Class<?> clazz, String key);
 
     /**
      * Send log message as a value with key, headers and {@link LoggerLevel} DEBUG logger level
@@ -79,14 +79,14 @@ public interface LoggerProducer {
      * @param key     key of a record
      * @param headers headers of a record
      */
-    void debug(String message, String key, Collection<Header> headers);
+    void debug(String message, Class<?> clazz, String key, Collection<Header> headers);
 
     /**
      * Send log message with {@link LoggerLevel} INFO logger level
      *
      * @param message - value of a record
      */
-    void info(String message);
+    void info(String message, Class<?> clazz);
 
     /**
      * Send log message as a value with key and {@link LoggerLevel} INFO logger level
@@ -94,7 +94,7 @@ public interface LoggerProducer {
      * @param message value of a record
      * @param key     key of a record
      */
-    void info(String message, String key);
+    void info(String message, Class<?> clazz, String key);
 
     /**
      * Send log message as a value with key, headers and {@link LoggerLevel} INFO logger level
@@ -103,14 +103,14 @@ public interface LoggerProducer {
      * @param key     key of a record
      * @param headers headers of a record
      */
-    void info(String message, String key, Collection<Header> headers);
+    void info(String message, Class<?> clazz, String key, Collection<Header> headers);
 
     /**
      * Send log message with {@link LoggerLevel} WARN logger level
      *
      * @param message - value of a record
      */
-    void warn(String message);
+    void warn(String message, Class<?> clazz);
 
     /**
      * Send log message as a value with key and {@link LoggerLevel} WARN logger level
@@ -118,7 +118,7 @@ public interface LoggerProducer {
      * @param message value of a record
      * @param key     key of a record
      */
-    void warn(String message, String key);
+    void warn(String message, Class<?> clazz, String key);
 
     /**
      * Send log message as a value with key, headers and {@link LoggerLevel} WARN logger level
@@ -127,14 +127,14 @@ public interface LoggerProducer {
      * @param key     key of a record
      * @param headers headers of a record
      */
-    void warn(String message, String key, Collection<Header> headers);
+    void warn(String message, Class<?> clazz, String key, Collection<Header> headers);
 
     /**
      * Send log message with {@link LoggerLevel} ERROR logger level
      *
      * @param message - value of a record
      */
-    void error(String message);
+    void error(String message, Class<?> clazz);
 
     /**
      * Send log message as a value with key and {@link LoggerLevel} ERROR logger level
@@ -142,7 +142,7 @@ public interface LoggerProducer {
      * @param message value of a record
      * @param key     key of a record
      */
-    void error(String message, String key);
+    void error(String message, Class<?> clazz, String key);
 
     /**
      * Send log message as a value with key, headers and {@link LoggerLevel} ERROR logger level
@@ -151,5 +151,5 @@ public interface LoggerProducer {
      * @param key     key of a record
      * @param headers headers of a record
      */
-    void error(String message, String key, Collection<Header> headers);
+    void error(String message, Class<?> clazz, String key, Collection<Header> headers);
 }

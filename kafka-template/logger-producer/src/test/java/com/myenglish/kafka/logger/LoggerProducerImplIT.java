@@ -10,6 +10,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.test.context.EmbeddedKafka;
 import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -22,9 +23,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @ExtendWith(SpringExtension.class)
-@EmbeddedKafka(partitions = 1, topics = "logger", brokerProperties = {"listeners=PLAINTEXT://localhost:9089", "port=9089"})
+@EmbeddedKafka(partitions = 1, topics = "logger", brokerProperties = {"listeners=PLAINTEXT://localhost:9001", "port=9001"})
 @TestPropertySource(locations = {"classpath:logger-producer-test.properties"})
 @ContextConfiguration(classes = {LoggerProducerConfig.class, TestConsumerConfig.class})
+@ActiveProfiles("kafka")
 public class LoggerProducerImplIT {
 
     @Autowired
@@ -34,6 +36,7 @@ public class LoggerProducerImplIT {
 
     private static final String MESSAGE = "MESSAGE";
     private static final String KEY = "KEY";
+    private static final Class<?> CLASS = LoggerProducerImplIT.class;
     private ConsumerRecord<String, String> record;
 
     @AfterEach
@@ -41,6 +44,8 @@ public class LoggerProducerImplIT {
         if (record != null) {
             assertEquals(KafkaTopics.LOGGER, record.topic());
             assertEquals(MESSAGE, record.value());
+            String classNameFromHeader = new String(record.headers().lastHeader("Class").value());
+            assertEquals(CLASS.getName(), classNameFromHeader);
 
             System.out.println("Record: " + record);
             record = null;
@@ -57,7 +62,7 @@ public class LoggerProducerImplIT {
     @DirtiesContext
     @Test
     public void sendLog_WithOneParam() {
-        producer.sendLog(MESSAGE);
+        producer.sendLog(MESSAGE, CLASS);
         sleep(consumer);
         record = consumer.getRecord();
     }
@@ -65,7 +70,7 @@ public class LoggerProducerImplIT {
     @DirtiesContext
     @Test
     public void sendLog_WithTwoParams() {
-        producer.sendLog(MESSAGE, KEY);
+        producer.sendLog(MESSAGE, CLASS, KEY);
         sleep(consumer);
         record = consumer.getRecord();
         assertEquals(KEY, record.key());
@@ -74,7 +79,7 @@ public class LoggerProducerImplIT {
     @DirtiesContext
     @Test
     public void sendLog_WithThreeParams() {
-        producer.sendLog(MESSAGE, KEY, null);
+        producer.sendLog(MESSAGE, CLASS, KEY, null);
         sleep(consumer);
         record = consumer.getRecord();
         assertEquals(KEY, record.key());
@@ -84,7 +89,7 @@ public class LoggerProducerImplIT {
     @DirtiesContext
     @Test
     public void trace_WithOneParam() {
-        producer.trace(MESSAGE);
+        producer.trace(MESSAGE, CLASS);
         sleep(consumer);
         record = consumer.getRecord();
     }
@@ -92,7 +97,7 @@ public class LoggerProducerImplIT {
     @DirtiesContext
     @Test
     public void trace_WithTwoParams() {
-        producer.trace(MESSAGE, KEY);
+        producer.trace(MESSAGE, CLASS, KEY);
         sleep(consumer);
         record = consumer.getRecord();
         assertEquals(KEY, record.key());
@@ -101,7 +106,7 @@ public class LoggerProducerImplIT {
     @DirtiesContext
     @Test
     public void trace_WithThreeParams_WhenHeadersExist() {
-        producer.trace(MESSAGE, KEY, buildHeaders(LoggerLevel.TRACE));
+        producer.trace(MESSAGE, CLASS, KEY, buildHeaders(LoggerLevel.TRACE));
         sleep(consumer);
         record = consumer.getRecord();
         assertEquals(KEY, record.key());
@@ -111,7 +116,7 @@ public class LoggerProducerImplIT {
     @DirtiesContext
     @Test
     public void trace_WithThreeParams_WhenHeadersNotExist() {
-        producer.trace(MESSAGE, KEY, null);
+        producer.trace(MESSAGE, CLASS, KEY, null);
         sleep(consumer);
         record = consumer.getRecord();
         assertEquals(KEY, record.key());
@@ -122,7 +127,7 @@ public class LoggerProducerImplIT {
     @DirtiesContext
     @Test
     public void trace_WithThreeParams_WhenHeadersNotContainLoggerLevel() {
-        producer.trace(MESSAGE, KEY, new ArrayList<>());
+        producer.trace(MESSAGE, CLASS, KEY, new ArrayList<>());
         sleep(consumer);
         record = consumer.getRecord();
         assertEquals(KEY, record.key());
@@ -133,7 +138,7 @@ public class LoggerProducerImplIT {
     @DirtiesContext
     @Test
     public void debug_WithOneParam() {
-        producer.debug(MESSAGE);
+        producer.debug(MESSAGE, CLASS);
         sleep(consumer);
         record = consumer.getRecord();
     }
@@ -141,7 +146,7 @@ public class LoggerProducerImplIT {
     @DirtiesContext
     @Test
     public void debug_WithTwoParams() {
-        producer.debug(MESSAGE, KEY);
+        producer.debug(MESSAGE, CLASS, KEY);
         sleep(consumer);
         record = consumer.getRecord();
         assertEquals(KEY, record.key());
@@ -150,7 +155,7 @@ public class LoggerProducerImplIT {
     @DirtiesContext
     @Test
     public void debug_WithThreeParams_WhenHeadersExist() {
-        producer.debug(MESSAGE, KEY, buildHeaders(LoggerLevel.DEBUG));
+        producer.debug(MESSAGE, CLASS, KEY, buildHeaders(LoggerLevel.DEBUG));
         sleep(consumer);
         record = consumer.getRecord();
         assertEquals(KEY, record.key());
@@ -160,7 +165,7 @@ public class LoggerProducerImplIT {
     @DirtiesContext
     @Test
     public void debug_WithThreeParams_WhenHeadersNotExist() {
-        producer.debug(MESSAGE, KEY, null);
+        producer.debug(MESSAGE, CLASS, KEY, null);
         sleep(consumer);
         record = consumer.getRecord();
         assertEquals(KEY, record.key());
@@ -171,7 +176,7 @@ public class LoggerProducerImplIT {
     @DirtiesContext
     @Test
     public void debug_WithThreeParams_WhenHeadersNotContainLoggerLevel() {
-        producer.debug(MESSAGE, KEY, new ArrayList<>());
+        producer.debug(MESSAGE, CLASS, KEY, new ArrayList<>());
         sleep(consumer);
         record = consumer.getRecord();
         assertEquals(KEY, record.key());
@@ -182,7 +187,7 @@ public class LoggerProducerImplIT {
     @DirtiesContext
     @Test
     public void info_WithOneParam() {
-        producer.info(MESSAGE);
+        producer.info(MESSAGE, CLASS);
         sleep(consumer);
         record = consumer.getRecord();
     }
@@ -190,7 +195,7 @@ public class LoggerProducerImplIT {
     @DirtiesContext
     @Test
     public void info_WithTwoParams() {
-        producer.info(MESSAGE, KEY);
+        producer.info(MESSAGE, CLASS, KEY);
         sleep(consumer);
         record = consumer.getRecord();
         assertEquals(KEY, record.key());
@@ -199,7 +204,7 @@ public class LoggerProducerImplIT {
     @DirtiesContext
     @Test
     public void info_WithThreeParams_WhenHeadersExist() {
-        producer.info(MESSAGE, KEY, buildHeaders(LoggerLevel.INFO));
+        producer.info(MESSAGE, CLASS, KEY, buildHeaders(LoggerLevel.INFO));
         sleep(consumer);
         record = consumer.getRecord();
         assertEquals(KEY, record.key());
@@ -209,7 +214,7 @@ public class LoggerProducerImplIT {
     @DirtiesContext
     @Test
     public void info_WithThreeParams_WhenHeadersNotExist() {
-        producer.info(MESSAGE, KEY, null);
+        producer.info(MESSAGE, CLASS, KEY, null);
         sleep(consumer);
         record = consumer.getRecord();
         assertEquals(KEY, record.key());
@@ -220,7 +225,7 @@ public class LoggerProducerImplIT {
     @DirtiesContext
     @Test
     public void info_WithThreeParams_WhenHeadersNotContainLoggerLevel() {
-        producer.info(MESSAGE, KEY, new ArrayList<>());
+        producer.info(MESSAGE, CLASS, KEY, new ArrayList<>());
         sleep(consumer);
         record = consumer.getRecord();
         assertEquals(KEY, record.key());
@@ -231,7 +236,7 @@ public class LoggerProducerImplIT {
     @DirtiesContext
     @Test
     public void warn_WithOneParam() {
-        producer.warn(MESSAGE);
+        producer.warn(MESSAGE, CLASS);
         sleep(consumer);
         record = consumer.getRecord();
     }
@@ -239,7 +244,7 @@ public class LoggerProducerImplIT {
     @DirtiesContext
     @Test
     public void warn_WithTwoParams() {
-        producer.warn(MESSAGE, KEY);
+        producer.warn(MESSAGE, CLASS, KEY);
         sleep(consumer);
         record = consumer.getRecord();
         assertEquals(KEY, record.key());
@@ -248,7 +253,7 @@ public class LoggerProducerImplIT {
     @DirtiesContext
     @Test
     public void warn_WithThreeParams_WhenHeadersExist() {
-        producer.warn(MESSAGE, KEY, buildHeaders(LoggerLevel.WARN));
+        producer.warn(MESSAGE, CLASS, KEY, buildHeaders(LoggerLevel.WARN));
         sleep(consumer);
         record = consumer.getRecord();
         assertEquals(KEY, record.key());
@@ -258,7 +263,7 @@ public class LoggerProducerImplIT {
     @DirtiesContext
     @Test
     public void warn_WithThreeParams_WhenHeadersNotExist() {
-        producer.warn(MESSAGE, KEY, null);
+        producer.warn(MESSAGE, CLASS, KEY, null);
         sleep(consumer);
         record = consumer.getRecord();
         assertEquals(KEY, record.key());
@@ -269,7 +274,7 @@ public class LoggerProducerImplIT {
     @DirtiesContext
     @Test
     public void warn_WithThreeParams_WhenHeadersNotContainLoggerLevel() {
-        producer.warn(MESSAGE, KEY, new ArrayList<>());
+        producer.warn(MESSAGE, CLASS, KEY, new ArrayList<>());
         sleep(consumer);
         record = consumer.getRecord();
         assertEquals(KEY, record.key());
@@ -280,7 +285,7 @@ public class LoggerProducerImplIT {
     @DirtiesContext
     @Test
     public void error_WithOneParam() {
-        producer.error(MESSAGE);
+        producer.error(MESSAGE, CLASS);
         sleep(consumer);
         record = consumer.getRecord();
     }
@@ -288,7 +293,7 @@ public class LoggerProducerImplIT {
     @DirtiesContext
     @Test
     public void error_WithTwoParams() {
-        producer.error(MESSAGE, KEY);
+        producer.error(MESSAGE, CLASS, KEY);
         sleep(consumer);
         record = consumer.getRecord();
         assertEquals(KEY, record.key());
@@ -297,7 +302,7 @@ public class LoggerProducerImplIT {
     @DirtiesContext
     @Test
     public void error_WithThreeParams_WhenHeadersExist() {
-        producer.error(MESSAGE, KEY, buildHeaders(LoggerLevel.ERROR));
+        producer.error(MESSAGE, CLASS, KEY, buildHeaders(LoggerLevel.ERROR));
         sleep(consumer);
         record = consumer.getRecord();
         assertEquals(KEY, record.key());
@@ -307,7 +312,7 @@ public class LoggerProducerImplIT {
     @DirtiesContext
     @Test
     public void error_WithThreeParams_WhenHeadersNotExist() {
-        producer.error(MESSAGE, KEY, null);
+        producer.error(MESSAGE, CLASS, KEY, null);
         sleep(consumer);
         record = consumer.getRecord();
         assertEquals(KEY, record.key());
@@ -318,7 +323,7 @@ public class LoggerProducerImplIT {
     @DirtiesContext
     @Test
     public void error_WithThreeParams_WhenHeadersNotContainLoggerLevel() {
-        producer.error(MESSAGE, KEY, new ArrayList<>());
+        producer.error(MESSAGE, CLASS, KEY, new ArrayList<>());
         sleep(consumer);
         record = consumer.getRecord();
         assertEquals(KEY, record.key());

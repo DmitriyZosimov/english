@@ -1,6 +1,7 @@
 package com.myenglish.service;
 
 import com.myenglish.dao.WordDao;
+import com.myenglish.kafka.logger.LoggerProducer;
 import com.myenglish.model.Word;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
@@ -17,43 +18,52 @@ import java.util.Optional;
 @Transactional
 public class WordServiceImpl implements WordService {
 
+    private static int counter = 0;
     private WordDao wordDao;
+    private LoggerProducer logger;
     private static final String filePath = System.getProperty("user.home") + "/.english/savedWords.txt";
 
-    public WordServiceImpl(WordDao wordDao) {
+    public WordServiceImpl(WordDao wordDao, LoggerProducer loggerProducer) {
         this.wordDao = wordDao;
+        this.logger = loggerProducer;
     }
 
     @Transactional(readOnly = true)
     @Override
     public List<Word> getFourRandomWords() {
+        logger.debug("using getFourRandomWords...", WordServiceImpl.class);
         return wordDao.getFourRandomWords();
     }
 
     @Override
     public List<Word> getFourRandomWordsByDateFrom(LocalDate date) {
+        logger.debug("using getFourRandomWordsByDateFrom with date:" + date, WordServiceImpl.class);
         return wordDao.getFourRandomWordsByDateFrom(date);
     }
 
     @Transactional(readOnly = true)
     @Override
     public Optional<Word> getRandomWord() {
+        logger.debug("using getRandomWord...", WordServiceImpl.class);
         return wordDao.getRandomWord();
     }
 
     @Override
     public Optional<Word> getRandomWordByDateFrom(LocalDate date) {
+        logger.debug("using getRandomWordByDateFrom with date:" + date, WordServiceImpl.class);
         return wordDao.getRandomWordByDateFrom(date);
     }
 
     @Transactional(readOnly = true)
     @Override
     public Optional<Word> getWordByEnglish(String english) {
+        logger.debug("using getWordByEnglish with english:" + english, WordServiceImpl.class);
         return wordDao.getWordByEnglish(english);
     }
 
     @Override
     public Word saveOrUpdateWord(Word word) {
+        logger.debug("using saveOrUpdateWord with word:" + word, WordServiceImpl.class);
         Word savedWord = wordDao.saveOrUpdateWord(word);
         writeSavedWordToTheFile(savedWord, null);
         return savedWord;
@@ -62,6 +72,7 @@ public class WordServiceImpl implements WordService {
     @Transactional(propagation = Propagation.NEVER)
     @Override
     public void writeSavedWordToTheFile(Word word, @Nullable File file) {
+        logger.debug("using writeSavedWordToTheFile with:" + word + " and file:" + file, WordServiceImpl.class);
         if(file == null) {
             file = new File(filePath);
         }

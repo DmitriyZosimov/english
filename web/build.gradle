@@ -19,6 +19,8 @@ dependencies {
     implementation project (':service')
     implementation project (':service-api')
     implementation project (':dao-api')
+    implementation project(':kafka-template:logger-producer')
+    implementation project(':kafka-template:logger-consumer')
 
     implementation spring.web,
             spring.webmvc,
