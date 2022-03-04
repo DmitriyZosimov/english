@@ -6,6 +6,7 @@ import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.annotation.TopicPartition;
 import org.springframework.stereotype.Component;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
@@ -63,13 +64,19 @@ public class LoggerConsumer {
 
     private void print() {
         while (!this.records.isEmpty()) {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
             ConsumerRecord<String, String> record = records.poll();
-            System.out.println(String.format("[%s] %s %s",
-                    Calendar.getInstance().getTime(),
+            System.out.println(String.format("%s %s [%s] %s",
+                    dateFormat.format(Calendar.getInstance().getTime()),
                     getLoggerLevel(record),
+                    getClassName(record),
                     getValue(record)));
             countDown();
         }
+    }
+
+    private String getClassName(ConsumerRecord<String, String> record) {
+        return new String(record.headers().lastHeader("Class").value());
     }
 
     private String getLoggerLevel(ConsumerRecord<String, String> record) {

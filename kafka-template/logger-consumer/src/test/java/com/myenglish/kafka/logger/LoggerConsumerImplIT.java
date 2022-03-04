@@ -67,7 +67,7 @@ public class LoggerConsumerImplIT {
 
     private void sleep() {
         try {
-            countDownLatch.await(60, TimeUnit.SECONDS);
+            countDownLatch.await(180, TimeUnit.SECONDS);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -92,6 +92,7 @@ class LoggerProducerTest {
             String message = "message" + i;
             Collection<Header> headers = new ArrayList<>();
             headers.add(new RecordHeader("LoggerLevel", "DEBUG".getBytes()));
+            headers.add(new RecordHeader("Class", LoggerProducerTest.class.getName().getBytes()));
             ProducerRecord<String, String> record = new ProducerRecord<>(KafkaTopics.LOGGER, partitions[indexOfPartition], key, message, headers);
             ListenableFuture<SendResult<String, String>> result = kafkaTemplate.send(record);
             result.addCallback(result1 -> System.out.println("Kafka logger result: " + result1),
