@@ -34,8 +34,9 @@ import java.util.concurrent.TimeUnit;
 @ExtendWith(SpringExtension.class)
 @ActiveProfiles("kafka")
 @ContextConfiguration(classes = {LoggerConsumerConfig.class, LoggerProducerTestConfig.class})
-@EmbeddedKafka(partitions = 3, topics = KafkaTopics.LOGGER, value = 3, ports = {9090, 9091, 9092})
-@TestPropertySource(properties = {"auto.offset.reset=earliest", "max.poll.interval.ms=2500"})
+@EmbeddedKafka(partitions = 3, topics = KafkaTopics.LOGGER, value = 3, ports = {9007, 9008, 9009})
+@TestPropertySource(properties = {"auto.offset.reset=earliest", "max.poll.interval.ms=2500",
+        "bootstrap.servers=localhost:9007,localhost:9008,localhost:9009"})
 public class LoggerConsumerImplIT {
 
     static int QUANTITY = 50;
@@ -128,7 +129,7 @@ class LoggerProducerTestConfig {
         Map<String, Object> properties = new HashMap<>();
         properties.put(ProducerConfig.ACKS_CONFIG, "all");
         properties.put(ProducerConfig.BATCH_SIZE_CONFIG, 32768);
-        properties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092,localhost:9090,localhost:9091");
+        properties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9007,localhost:9008,localhost:9009");
         properties.put(ProducerConfig.BUFFER_MEMORY_CONFIG, 10485760);
         properties.put(ProducerConfig.DELIVERY_TIMEOUT_MS_CONFIG, 180000);
         properties.put(ProducerConfig.LINGER_MS_CONFIG, 1000);
