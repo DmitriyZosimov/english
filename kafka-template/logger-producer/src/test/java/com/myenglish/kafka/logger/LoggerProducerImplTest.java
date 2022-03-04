@@ -28,7 +28,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class LoggerProucerImplTest {
+public class LoggerProducerImplTest {
 
     @InjectMocks
     private LoggerProducerImpl producer;
@@ -45,6 +45,7 @@ public class LoggerProucerImplTest {
     private static final String MESSAGE = "MESSAGE";
     private static final String KEY = "KEY";
     private static final String TOPIC = KafkaTopics.LOGGER;
+    private static final Class<?> CLASS = LoggerProducerImplTest.class;
 
     @BeforeEach
     public void setup() {
@@ -68,23 +69,25 @@ public class LoggerProucerImplTest {
 
         assertEquals(MESSAGE, argumentCaptor.getValue().value());
         assertEquals(TOPIC, argumentCaptor.getValue().topic());
+        String classFromHeader = new String (argumentCaptor.getValue().headers().lastHeader("Class").value());
+        assertEquals(CLASS.getName(), classFromHeader);
     }
 
     @Test
     public void sendLog_WithOneParam() {
-        producer.sendLog(MESSAGE);
+        producer.sendLog(MESSAGE, CLASS);
     }
 
     @Test
     public void sendLog_WithTwoParams() {
-        producer.sendLog(MESSAGE, KEY);
+        producer.sendLog(MESSAGE, CLASS, KEY);
 
         assertEquals(KEY, argumentCaptor.getValue().key());
     }
 
     @Test
     public void sendLog_WithThreeParams() {
-        producer.sendLog(MESSAGE, KEY, null);
+        producer.sendLog(MESSAGE, CLASS, KEY, null);
 
         assertEquals(KEY, argumentCaptor.getValue().key());
         assertNotNull(argumentCaptor.getValue().headers());
@@ -92,19 +95,19 @@ public class LoggerProucerImplTest {
 
     @Test
     public void trace_WithOneParam() {
-        producer.trace(MESSAGE);
+        producer.trace(MESSAGE, CLASS);
     }
 
     @Test
     public void trace_WithTwoParams() {
-        producer.trace(MESSAGE, KEY);
+        producer.trace(MESSAGE, CLASS, KEY);
 
         assertEquals(KEY, argumentCaptor.getValue().key());
     }
 
     @Test
     public void trace_WithThreeParams_WhenHeadersExist() {
-        producer.trace(MESSAGE, KEY, buildHeaders(LoggerLevel.TRACE));
+        producer.trace(MESSAGE, CLASS, KEY, buildHeaders(LoggerLevel.TRACE));
 
         assertEquals(KEY, argumentCaptor.getValue().key());
         assertNotNull(argumentCaptor.getValue().headers());
@@ -112,7 +115,7 @@ public class LoggerProucerImplTest {
 
     @Test
     public void trace_WithThreeParams_WhenHeadersNotExist() {
-        producer.trace(MESSAGE, KEY, null);
+        producer.trace(MESSAGE, CLASS, KEY, null);
 
         assertEquals(KEY, argumentCaptor.getValue().key());
         String logLevel = new String(argumentCaptor.getValue().headers().lastHeader("LoggerLevel").value());
@@ -121,7 +124,7 @@ public class LoggerProucerImplTest {
 
     @Test
     public void trace_WithThreeParams_WhenHeadersNotContainLoggerLevel() {
-        producer.trace(MESSAGE, KEY, new ArrayList<>());
+        producer.trace(MESSAGE, CLASS, KEY, new ArrayList<>());
 
         assertEquals(KEY, argumentCaptor.getValue().key());
         String logLevel = new String(argumentCaptor.getValue().headers().lastHeader("LoggerLevel").value());
@@ -130,19 +133,19 @@ public class LoggerProucerImplTest {
 
     @Test
     public void debug_WithOneParam() {
-        producer.debug(MESSAGE);
+        producer.debug(MESSAGE, CLASS);
     }
 
     @Test
     public void debug_WithTwoParams() {
-        producer.debug(MESSAGE, KEY);
+        producer.debug(MESSAGE, CLASS, KEY);
 
         assertEquals(KEY, argumentCaptor.getValue().key());
     }
 
     @Test
     public void debug_WithThreeParams_WhenHeadersExist() {
-        producer.debug(MESSAGE, KEY, buildHeaders(LoggerLevel.DEBUG));
+        producer.debug(MESSAGE, CLASS, KEY, buildHeaders(LoggerLevel.DEBUG));
 
         assertEquals(KEY, argumentCaptor.getValue().key());
         assertNotNull(argumentCaptor.getValue().headers());
@@ -150,7 +153,7 @@ public class LoggerProucerImplTest {
 
     @Test
     public void debug_WithThreeParams_WhenHeadersNotExist() {
-        producer.debug(MESSAGE, KEY, null);
+        producer.debug(MESSAGE, CLASS, KEY, null);
 
         assertEquals(KEY, argumentCaptor.getValue().key());
         String logLevel = new String(argumentCaptor.getValue().headers().lastHeader("LoggerLevel").value());
@@ -159,7 +162,7 @@ public class LoggerProucerImplTest {
 
     @Test
     public void debug_WithThreeParams_WhenHeadersNotContainLoggerLevel() {
-        producer.debug(MESSAGE, KEY, new ArrayList<>());
+        producer.debug(MESSAGE, CLASS, KEY, new ArrayList<>());
 
         assertEquals(KEY, argumentCaptor.getValue().key());
         String logLevel = new String(argumentCaptor.getValue().headers().lastHeader("LoggerLevel").value());
@@ -168,19 +171,19 @@ public class LoggerProucerImplTest {
 
     @Test
     public void info_WithOneParam() {
-        producer.info(MESSAGE);
+        producer.info(MESSAGE, CLASS);
     }
 
     @Test
     public void info_WithTwoParams() {
-        producer.info(MESSAGE, KEY);
+        producer.info(MESSAGE, CLASS, KEY);
 
         assertEquals(KEY, argumentCaptor.getValue().key());
     }
 
     @Test
     public void info_WithThreeParams_WhenHeadersExist() {
-        producer.info(MESSAGE, KEY, buildHeaders(LoggerLevel.INFO));
+        producer.info(MESSAGE, CLASS, KEY, buildHeaders(LoggerLevel.INFO));
 
         assertEquals(KEY, argumentCaptor.getValue().key());
         assertNotNull(argumentCaptor.getValue().headers());
@@ -188,7 +191,7 @@ public class LoggerProucerImplTest {
 
     @Test
     public void info_WithThreeParams_WhenHeadersNotExist() {
-        producer.info(MESSAGE, KEY, null);
+        producer.info(MESSAGE, CLASS, KEY, null);
 
         assertEquals(KEY, argumentCaptor.getValue().key());
         String logLevel = new String(argumentCaptor.getValue().headers().lastHeader("LoggerLevel").value());
@@ -197,7 +200,7 @@ public class LoggerProucerImplTest {
 
     @Test
     public void info_WithThreeParams_WhenHeadersNotContainLoggerLevel() {
-        producer.info(MESSAGE, KEY, new ArrayList<>());
+        producer.info(MESSAGE, CLASS, KEY, new ArrayList<>());
 
         assertEquals(KEY, argumentCaptor.getValue().key());
         String logLevel = new String(argumentCaptor.getValue().headers().lastHeader("LoggerLevel").value());
@@ -206,19 +209,19 @@ public class LoggerProucerImplTest {
 
     @Test
     public void warn_WithOneParam() {
-        producer.warn(MESSAGE);
+        producer.warn(MESSAGE, CLASS);
     }
 
     @Test
     public void warn_WithTwoParams() {
-        producer.warn(MESSAGE, KEY);
+        producer.warn(MESSAGE, CLASS, KEY);
 
         assertEquals(KEY, argumentCaptor.getValue().key());
     }
 
     @Test
     public void warn_WithThreeParams_WhenHeadersExist() {
-        producer.warn(MESSAGE, KEY, buildHeaders(LoggerLevel.WARN));
+        producer.warn(MESSAGE, CLASS, KEY, buildHeaders(LoggerLevel.WARN));
 
         assertEquals(KEY, argumentCaptor.getValue().key());
         assertNotNull(argumentCaptor.getValue().headers());
@@ -226,7 +229,7 @@ public class LoggerProucerImplTest {
 
     @Test
     public void warn_WithThreeParams_WhenHeadersNotExist() {
-        producer.warn(MESSAGE, KEY, null);
+        producer.warn(MESSAGE, CLASS, KEY, null);
 
         assertEquals(KEY, argumentCaptor.getValue().key());
         String logLevel = new String(argumentCaptor.getValue().headers().lastHeader("LoggerLevel").value());
@@ -235,7 +238,7 @@ public class LoggerProucerImplTest {
 
     @Test
     public void warn_WithThreeParams_WhenHeadersNotContainLoggerLevel() {
-        producer.warn(MESSAGE, KEY, new ArrayList<>());
+        producer.warn(MESSAGE, CLASS, KEY, new ArrayList<>());
 
         assertEquals(KEY, argumentCaptor.getValue().key());
         String logLevel = new String(argumentCaptor.getValue().headers().lastHeader("LoggerLevel").value());
@@ -244,19 +247,19 @@ public class LoggerProucerImplTest {
 
     @Test
     public void error_WithOneParam() {
-        producer.error(MESSAGE);
+        producer.error(MESSAGE, CLASS);
     }
 
     @Test
     public void error_WithTwoParams() {
-        producer.error(MESSAGE, KEY);
+        producer.error(MESSAGE, CLASS, KEY);
 
         assertEquals(KEY, argumentCaptor.getValue().key());
     }
 
     @Test
     public void error_WithThreeParams_WhenHeadersExist() {
-        producer.error(MESSAGE, KEY, buildHeaders(LoggerLevel.ERROR));
+        producer.error(MESSAGE, CLASS, KEY, buildHeaders(LoggerLevel.ERROR));
 
         assertEquals(KEY, argumentCaptor.getValue().key());
         assertNotNull(argumentCaptor.getValue().headers());
@@ -264,7 +267,7 @@ public class LoggerProucerImplTest {
 
     @Test
     public void error_WithThreeParams_WhenHeadersNotExist() {
-        producer.error(MESSAGE, KEY, null);
+        producer.error(MESSAGE, CLASS, KEY, null);
 
         assertEquals(KEY, argumentCaptor.getValue().key());
         String logLevel = new String(argumentCaptor.getValue().headers().lastHeader("LoggerLevel").value());
@@ -273,7 +276,7 @@ public class LoggerProucerImplTest {
 
     @Test
     public void error_WithThreeParams_WhenHeadersNotContainLoggerLevel() {
-        producer.error(MESSAGE, KEY, new ArrayList<>());
+        producer.error(MESSAGE, CLASS, KEY, new ArrayList<>());
 
         assertEquals(KEY, argumentCaptor.getValue().key());
         String logLevel = new String(argumentCaptor.getValue().headers().lastHeader("LoggerLevel").value());

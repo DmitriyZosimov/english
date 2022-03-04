@@ -23,18 +23,19 @@ public class LoggerProducerImpl implements LoggerProducer {
     }
 
     @Override
-    public void sendLog(String message) {
-        this.sendLog(message, null, null);
+    public void sendLog(String message, Class<?> clazz) {
+        this.sendLog(message, clazz, null, null);
     }
 
     @Override
-    public void sendLog(String message, String key) {
+    public void sendLog(String message, Class<?> clazz, String key) {
 
-        this.sendLog(message, key, null);
+        this.sendLog(message, clazz, key, null);
     }
 
     @Override
-    public void sendLog(String message, String key, Collection<Header> headers) {
+    public void sendLog(String message, Class<?> clazz, String key, Collection<Header> headers) {
+        headers = addClassToHeaders(headers, clazz);
         ProducerRecord<String, String> record = new ProducerRecord<>(KafkaTopics.LOGGER, null, key, message, headers);
         ListenableFuture<SendResult<String, String>> result = kafkaTemplate.send(record);
         result.addCallback(result1 -> System.out.println("Kafka logger result: " + result1),
@@ -43,91 +44,99 @@ public class LoggerProducerImpl implements LoggerProducer {
     }
 
     @Override
-    public void trace(String message) {
-        this.trace(message, null, null);
+    public void trace(String message, Class<?> clazz) {
+        this.trace(message, clazz, null, null);
     }
 
     @Override
-    public void trace(String message, String key) {
-        this.trace(message, key, null);
+    public void trace(String message, Class<?> clazz, String key) {
+        this.trace(message, clazz, key, null);
     }
 
     @Override
-    public void trace(String message, String key, Collection<Header> headers) {
+    public void trace(String message, Class<?> clazz, String key, Collection<Header> headers) {
         headers = checkLoggerLevelInHeaders(headers, LoggerLevel.TRACE);
-        this.sendLog(message, key, headers);
+        this.sendLog(message, clazz, key, headers);
     }
 
     @Override
-    public void debug(String message) {
-        this.debug(message, null, null);
+    public void debug(String message, Class<?> clazz) {
+        this.debug(message, clazz, null, null);
     }
 
     @Override
-    public void debug(String message, String key) {
-        this.debug(message, key, null);
+    public void debug(String message, Class<?> clazz, String key) {
+        this.debug(message, clazz, key, null);
     }
 
     @Override
-    public void debug(String message, String key, Collection<Header> headers) {
+    public void debug(String message, Class<?> clazz, String key, Collection<Header> headers) {
         headers = checkLoggerLevelInHeaders(headers, LoggerLevel.DEBUG);
-        this.sendLog(message, key, headers);
+        this.sendLog(message, clazz, key, headers);
     }
 
     @Override
-    public void info(String message) {
-        this.info(message, null, null);
+    public void info(String message, Class<?> clazz) {
+        this.info(message, clazz, null, null);
     }
 
     @Override
-    public void info(String message, String key) {
-        this.info(message, key, null);
+    public void info(String message, Class<?> clazz, String key) {
+        this.info(message, clazz, key, null);
     }
 
     @Override
-    public void info(String message, String key, Collection<Header> headers) {
+    public void info(String message, Class<?> clazz, String key, Collection<Header> headers) {
         headers = checkLoggerLevelInHeaders(headers, LoggerLevel.INFO);
-        this.sendLog(message, key, headers);
+        this.sendLog(message, clazz, key, headers);
     }
 
     @Override
-    public void warn(String message) {
-        this.warn(message, null, null);
+    public void warn(String message, Class<?> clazz) {
+        this.warn(message, clazz, null, null);
     }
 
     @Override
-    public void warn(String message, String key) {
-        this.warn(message, key, null);
+    public void warn(String message, Class<?> clazz, String key) {
+        this.warn(message, clazz, key, null);
     }
 
     @Override
-    public void warn(String message, String key, Collection<Header> headers) {
+    public void warn(String message, Class<?> clazz, String key, Collection<Header> headers) {
         headers = checkLoggerLevelInHeaders(headers, LoggerLevel.WARN);
-        this.sendLog(message, key, headers);
+        this.sendLog(message, clazz, key, headers);
     }
 
     @Override
-    public void error(String message) {
-        this.error(message, null, null);
+    public void error(String message, Class<?> clazz) {
+        this.error(message, clazz, null, null);
     }
 
     @Override
-    public void error(String message, String key) {
-        this.error(message, key, null);
+    public void error(String message, Class<?> clazz, String key) {
+        this.error(message, clazz, key, null);
     }
 
     @Override
-    public void error(String message, String key, Collection<Header> headers) {
+    public void error(String message, Class<?> clazz, String key, Collection<Header> headers) {
         headers = checkLoggerLevelInHeaders(headers, LoggerLevel.ERROR);
-        this.sendLog(message, key, headers);
+        this.sendLog(message, clazz, key, headers);
     }
 
     private Collection<Header> checkLoggerLevelInHeaders(Collection<Header> headers, LoggerLevel loggerLevel) {
+        return addHeader(headers, "LoggerLevel", loggerLevel.name());
+    }
+
+    private Collection<Header> addClassToHeaders(Collection<Header> headers, Class<?> clazz) {
+        return addHeader(headers, "Class", clazz.getName());
+    }
+
+    private Collection<Header> addHeader(Collection<Header> headers, String key, String value) {
         RecordHeader header;
         if (headers == null) {
             headers = new ArrayList<>();
-            headers.add(new RecordHeader("LoggerLevel", loggerLevel.name().getBytes()));
-        } else if (!headers.contains(header = new RecordHeader("LoggerLevel", loggerLevel.name().getBytes()))) {
+            headers.add(new RecordHeader(key, value.getBytes()));
+        } else if (!headers.contains(header = new RecordHeader(key, value.getBytes()))) {
             headers.add(header);
         }
         return headers;
