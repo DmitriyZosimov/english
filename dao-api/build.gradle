@@ -3,6 +3,8 @@ apply plugin: 'java'
 dependencies {
     implementation project (':model')
     implementation project (':dao')
+    implementation project (':kafka-template:logger-producer')
+    implementation project (':kafka-template:logger-consumer')
     implementation spring.context,
             spring.orm,
             logback.classic,
@@ -10,6 +12,7 @@ dependencies {
 
     testImplementation project (':test-db')
     testImplementation project (':aws-rds')
+    testImplementation project (':kafka-template:logger-producer')
     testImplementation spring.test,
             junit.junit,
             easymock.easymock

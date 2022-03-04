@@ -1,8 +1,6 @@
 package com.myenglish.dao.config;
 
 import org.hibernate.SessionFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -22,8 +20,6 @@ import java.util.Properties;
 @EnableTransactionManagement
 @PropertySource("classpath:dao-hibernate.properties")
 public class DaoHibernateConfig {
-
-    private static Logger LOGGER = LoggerFactory.getLogger(DaoHibernateConfig.class);
 
     @Value("${hibernate.dialect}")
     private String dialect;
