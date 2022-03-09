@@ -13,6 +13,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,9 +39,27 @@ public class WordDaoHibernateIT {
     }
 
     @Test
+    public void getFourRandomWordsByDateFromTest() {
+        LocalDate date = LocalDate.of(2021, 11, 1);
+        List<Word> words = wordDao.getFourRandomWordsByDateFrom(date);
+        Assertions.assertTrue(words.get(0).getDateOfRegistry().isAfter(date));
+        Assertions.assertTrue(words.get(1).getDateOfRegistry().isAfter(date));
+        Assertions.assertTrue(words.get(2).getDateOfRegistry().isAfter(date));
+        Assertions.assertTrue(words.get(3).getDateOfRegistry().isAfter(date));
+    }
+
+    @Test
     public void getRandomWordTest() {
         Optional<Word> opt = wordDao.getRandomWord();
         Assertions.assertTrue(opt.isPresent());
+    }
+
+    @Test
+    public void getRandomWordByDateFromTest() {
+        LocalDate date = LocalDate.of(2021, 11, 1);
+        Optional<Word> word = wordDao.getRandomWordByDateFrom(date);
+        Assertions.assertTrue(word.isPresent());
+        Assertions.assertTrue(word.get().getDateOfRegistry().isAfter(date));
     }
 
     @Test
