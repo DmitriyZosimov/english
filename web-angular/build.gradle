@@ -4,7 +4,6 @@ dependencies {
     implementation project (':model')
     implementation project (':aws-rds')
     implementation project (':local-db')
-    implementation project (':service')
     implementation project (':service-api')
     implementation project (':dao-api')
     implementation project (':kafka-template:logger-producer')
@@ -17,7 +16,6 @@ dependencies {
 
     testImplementation project (':aws-rds')
     testImplementation project (':local-db')
-    testImplementation project (':service')
     testImplementation project (':service-api')
     testImplementation spring.test,
             junit.junit,
