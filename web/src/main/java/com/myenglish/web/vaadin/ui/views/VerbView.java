@@ -27,7 +27,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 @PageTitle("Verbs")
 @Route(value = "verbs", layout = MainLayout.class)
-public class VerbView extends VerticalLayout implements View {
+public class VerbView extends VerticalLayout implements DateFromView {
 
     private VerbService verbService;
     private VerticalLayout mainLayout;
@@ -128,7 +128,7 @@ public class VerbView extends VerticalLayout implements View {
 
         Button selectDateButton = new Button("Select date");
         selectDateButton.addClickListener(event -> {
-            DialogTools.buildDialogForDate(dateFrom, this).open();
+            DialogTools.buildDialogForDate(this).open();
         });
 
         simpleStatistic = new SimpleStatistic(this);
@@ -155,4 +155,8 @@ public class VerbView extends VerticalLayout implements View {
         }
     }
 
+    @Override
+    public void setDateFrom(LocalDate dateFrom) {
+        this.dateFrom = dateFrom;
+    }
 }

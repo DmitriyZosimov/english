@@ -28,7 +28,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 @PageTitle("Translate from russian")
 @Route(value = "translate/ru", layout = MainLayout.class)
-public class TranslateFromRussianView extends VerticalLayout implements View {
+public class TranslateFromRussianView extends VerticalLayout implements DateFromView {
 
     private WordService wordService;
 
@@ -157,7 +157,7 @@ public class TranslateFromRussianView extends VerticalLayout implements View {
 
         Button selectDateButton = new Button("Select date");
         selectDateButton.addClickListener(event -> {
-            DialogTools.buildDialogForDate(dateFrom, this).open();
+            DialogTools.buildDialogForDate(this).open();
         });
 
         Button testModeButton = new Button("Test mode");
@@ -198,4 +198,8 @@ public class TranslateFromRussianView extends VerticalLayout implements View {
         }
     }
 
+    @Override
+    public void setDateFrom(LocalDate dateFrom) {
+        this.dateFrom = dateFrom;
+    }
 }
