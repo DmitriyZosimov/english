@@ -2,7 +2,6 @@ apply plugin: 'java'
 
 dependencies {
     implementation project (':model')
-    implementation project (':dao')
     implementation project (':kafka-template:logger-producer')
     implementation spring.context,
             spring.orm,
