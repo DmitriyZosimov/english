@@ -22,6 +22,7 @@ There are few profiles:
 ```
 cd /opt
 mkdir tomcat
+cd tomcat
 wget https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.60/bin/apache-tomcat-9.0.60.tar.gz
 tar -xzvf apache-tomcat-9.0.60.tar.gz
 rm -r apache-tomcat-9.0.60.tar.gz
