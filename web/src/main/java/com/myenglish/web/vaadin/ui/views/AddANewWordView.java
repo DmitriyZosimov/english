@@ -56,12 +56,15 @@ public class AddANewWordView extends VerticalLayout implements AddingView {
 
         TextArea descriptionArea = TextAreaTools.buildDescriptionArea();
 
+        TextField transcriptionField = TextFieldTools.buildTranscriptionTextField();
+
         FormLayout layoutWithBinder = new FormLayout();
         Binder<Word> binder = new Binder<>();
 
         layoutWithBinder.addFormItem(englishField, "english word");
         layoutWithBinder.addFormItem(russianField, "russian translation");
         layoutWithBinder.addFormItem(descriptionArea, "description");
+        layoutWithBinder.addFormItem(transcriptionField, "transcription");
 
         SerializablePredicate<String> englishPatternPredicate = ValidationPredicates.buildEnglishPatternPredicate();
         SerializablePredicate<String> russianPatternPredicate = ValidationPredicates.buildRussianPatternPredicate();
@@ -78,6 +81,9 @@ public class AddANewWordView extends VerticalLayout implements AddingView {
 
         binder.forField(descriptionArea)
                 .bind(Word::getDescription, Word::setDescription);
+
+        binder.forField(transcriptionField)
+                .bind(Word::getTranscription, Word::setDescription);
 
         englishField.addValueChangeListener(event -> englishBinding.validate());
         russianField.addValueChangeListener(event -> russianBinding.validate());
@@ -103,9 +109,9 @@ public class AddANewWordView extends VerticalLayout implements AddingView {
                     Word savedWord = wordService.saveOrUpdateWord(word);
                     Text text;
                     if(savedWord.getId() != null) {
-                        text = new Text(savedWord.getEnglish() + " was saved");
+                        text = new Text(savedWord.getEnglish() + " was saved; ");
                     } else {
-                        text = new Text(savedWord.getEnglish() + " was not saved");
+                        text = new Text(savedWord.getEnglish() + " was not saved; ");
                     }
                     div.add(text);
                 } catch (ValidationException e) {
