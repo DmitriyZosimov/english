@@ -7,7 +7,7 @@ public class WordTest {
 
     @Test
     public void testToString() {
-        Word word = WordFactory.create().withId(1).withEnglish("hello").withRussian("здравствуйте").build();
+        Word word = WordBuilder.create().withId(1).withEnglish("hello").withRussian("здравствуйте").build();
         System.out.println(word);
         Assertions.assertNotNull(word);
     }

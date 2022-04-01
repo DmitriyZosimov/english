@@ -22,6 +22,8 @@ public class Word {
     private String description;
     @Column(name = "date_of_registry")
     private LocalDate dateOfRegistry;
+    @Column(name = "transcription")
+    private String transcription;
 
     @PrePersist
     public void setupDate() {
@@ -30,7 +32,7 @@ public class Word {
 
     @Override
     public String toString() {
-        return String.format("%s%15s%n%10s%20s%n%s", "English:", "Russian:", english, russian, description);
+        return String.format("%s%15s%15s%n%10s%20s%n%s", "English:", transcription, "Russian:", english, russian, description);
     }
 
     @Override
@@ -40,20 +42,23 @@ public class Word {
 
         Word word = (Word) o;
 
-        if (id != null ? !id.equals(word.id) : word.id != null) return false;
+        if (!id.equals(word.id)) return false;
         if (!english.equals(word.english)) return false;
         if (!russian.equals(word.russian)) return false;
         if (description != null ? !description.equals(word.description) : word.description != null) return false;
-        return dateOfRegistry != null ? dateOfRegistry.equals(word.dateOfRegistry) : word.dateOfRegistry == null;
+        if (dateOfRegistry != null ? !dateOfRegistry.equals(word.dateOfRegistry) : word.dateOfRegistry != null)
+            return false;
+        return transcription != null ? transcription.equals(word.transcription) : word.transcription == null;
     }
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
+        int result = id.hashCode();
         result = 31 * result + english.hashCode();
         result = 31 * result + russian.hashCode();
         result = 31 * result + (description != null ? description.hashCode() : 0);
         result = 31 * result + (dateOfRegistry != null ? dateOfRegistry.hashCode() : 0);
+        result = 31 * result + (transcription != null ? transcription.hashCode() : 0);
         return result;
     }
 }

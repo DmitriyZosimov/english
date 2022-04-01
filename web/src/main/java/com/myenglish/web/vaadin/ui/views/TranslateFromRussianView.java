@@ -64,7 +64,7 @@ public class TranslateFromRussianView extends VerticalLayout implements DateFrom
         labelLayout.add(description);
 
         Div buttonsDiv = new Div();
-        for(Word wordForButton : words) {
+        for (Word wordForButton : words) {
             Div singletonButtonDiv = new Div();
             Label buttonLabel = new Label(wordForButton.getEnglish());
             Button wordButton = new Button(buttonLabel);
@@ -73,7 +73,7 @@ public class TranslateFromRussianView extends VerticalLayout implements DateFrom
             wordButton.setWidth(450f, Unit.PIXELS);
             wordButton.setHeight(50f, Unit.PIXELS);
             wordButton.addClickListener(event -> {
-                if(word.equals(wordForButton)) {
+                if (word.equals(wordForButton)) {
                     wordButton.addThemeVariants(ButtonVariant.LUMO_SUCCESS);
                     replace(testModeMainLayout, buildTestModeMainLayout());
                 } else {
@@ -84,7 +84,7 @@ public class TranslateFromRussianView extends VerticalLayout implements DateFrom
             singletonButtonDiv.add(wordButton);
             buttonsDiv.add(singletonButtonDiv);
         }
-        
+
         testModeMainLayout.add(labelLayout, buttonsDiv, buildNextButton());
         testModeMainLayout.setAlignItems(Alignment.CENTER);
         return testModeMainLayout;
@@ -116,7 +116,7 @@ public class TranslateFromRussianView extends VerticalLayout implements DateFrom
         enterButton.addClickShortcut(Key.ENTER);
         enterButton.addClickListener(event -> {
             Icon icon;
-            if(result.get()) {
+            if (result.get()) {
                 icon = new Icon(VaadinIcon.CHECK);
                 icon.setColor("green");
             } else {
@@ -128,7 +128,12 @@ public class TranslateFromRussianView extends VerticalLayout implements DateFrom
 
         Button answerButton = new Button("get answer");
         answerButton.addClickListener(event -> {
-            inputModeMainLayout.add(new Text(word.getEnglish()));
+            VerticalLayout answerLayout = new VerticalLayout(
+                    new Text(word.getEnglish()),
+                    prepareTranscription(word.getTranscription()));
+            answerLayout.setAlignItems(Alignment.CENTER);
+            answerLayout.setMargin(false);
+            inputModeMainLayout.add(answerLayout);
         });
         HorizontalLayout buttonsLayout = new HorizontalLayout();
         buttonsLayout.add(enterButton, answerButton, buildNextButton());
@@ -136,13 +141,13 @@ public class TranslateFromRussianView extends VerticalLayout implements DateFrom
         inputModeMainLayout.setAlignItems(Alignment.CENTER);
         return inputModeMainLayout;
     }
-    
+
     private Div buildNextButton() {
         Div nextButtonDiv = new Div();
         Button button = new Button("next");
         button.addClickShortcut(Key.ARROW_RIGHT);
         button.addClickListener(event -> {
-            if(isTestMode) {
+            if (isTestMode) {
                 replace(testModeMainLayout, buildTestModeMainLayout());
             } else {
                 replace(inputModeMainLayout, buildInputModeMainLayout());
@@ -183,7 +188,7 @@ public class TranslateFromRussianView extends VerticalLayout implements DateFrom
     }
 
     private List<Word> getWordsList() {
-        if(dateFrom != null) {
+        if (dateFrom != null) {
             return wordService.getFourRandomWordsByDateFrom(dateFrom);
         } else {
             return wordService.getFourRandomWords();
@@ -191,7 +196,7 @@ public class TranslateFromRussianView extends VerticalLayout implements DateFrom
     }
 
     private Word getWord() {
-        if(dateFrom != null) {
+        if (dateFrom != null) {
             return wordService.getRandomWordByDateFrom(dateFrom).orElse(new Word());
         } else {
             return wordService.getRandomWord().orElse(new Word());
@@ -201,5 +206,17 @@ public class TranslateFromRussianView extends VerticalLayout implements DateFrom
     @Override
     public void setDateFrom(LocalDate dateFrom) {
         this.dateFrom = dateFrom;
+    }
+
+    private Div prepareTranscription(String transcription) {
+        Text text;
+        if (transcription != null) {
+            text = new Text(transcription);
+        } else {
+            text = new Text("no transcription");
+        }
+        Div transcriptionDiv = new Div(text);
+        transcriptionDiv.getStyle().set("color", "#AAA6A5");
+        return transcriptionDiv;
     }
 }

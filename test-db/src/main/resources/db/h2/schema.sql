@@ -7,6 +7,7 @@ CREATE TABLE words (
     russian varchar(50) NOT NULL,
     description varchar(255),
     date_of_registry date,
+    transcription varchar(50),
     PRIMARY KEY(id)
 );
 

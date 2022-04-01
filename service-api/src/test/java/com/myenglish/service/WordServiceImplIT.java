@@ -3,7 +3,7 @@ package com.myenglish.service;
 import com.myenglish.dao.config.DaoHibernateConfig;
 import com.myenglish.kafka.logger.LoggerProducerWithoutKafkaConfig;
 import com.myenglish.model.Word;
-import com.myenglish.model.WordFactory;
+import com.myenglish.model.WordBuilder;
 import com.myenglish.service.config.ServiceConfig;
 import com.myenglish.testdb.TestH2DB;
 import org.junit.jupiter.api.Assertions;
@@ -38,7 +38,7 @@ public class WordServiceImplIT {
     @Test
     public void writeSavedWordToTheFileTest() {
         String result = "('english', 'russian', 'description', '2020-10-01'),";
-        Word word = WordFactory.create().withEnglish("english")
+        Word word = WordBuilder.create().withEnglish("english")
                 .withRussian("russian").withDescription("description")
                 .withDateOfRegistry(LocalDate.of(2020, 10, 1))
                 .build();

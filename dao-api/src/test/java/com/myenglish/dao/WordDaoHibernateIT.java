@@ -2,7 +2,7 @@ package com.myenglish.dao;
 
 import com.myenglish.kafka.logger.LoggerProducerWithoutKafkaConfig;
 import com.myenglish.model.Word;
-import com.myenglish.model.WordFactory;
+import com.myenglish.model.WordBuilder;
 import com.myenglish.testdb.TestH2DB;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -79,7 +79,7 @@ public class WordDaoHibernateIT {
 
     @Test
     public void saveWord() {
-        Word word = WordFactory.create().withEnglish("market").withRussian("рынок").build();
+        Word word = WordBuilder.create().withEnglish("market").withRussian("рынок").build();
         Word savedWord = wordDao.saveOrUpdateWord(word);
         Assertions.assertNotNull(savedWord.getId());
     }
