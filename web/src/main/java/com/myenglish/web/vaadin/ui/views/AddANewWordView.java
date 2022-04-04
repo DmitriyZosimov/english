@@ -83,7 +83,7 @@ public class AddANewWordView extends VerticalLayout implements AddingView {
                 .bind(Word::getDescription, Word::setDescription);
 
         binder.forField(transcriptionField)
-                .bind(Word::getTranscription, Word::setDescription);
+                .bind(Word::getTranscription, Word::setTranscription);
 
         englishField.addValueChangeListener(event -> englishBinding.validate());
         russianField.addValueChangeListener(event -> russianBinding.validate());
