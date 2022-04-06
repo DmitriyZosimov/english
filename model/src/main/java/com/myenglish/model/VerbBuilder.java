@@ -2,9 +2,9 @@ package com.myenglish.model;
 
 import java.time.LocalDate;
 
-public class VerbFactory {
+public class VerbBuilder {
 
-    private static VerbFactory verbFactory = new VerbFactory();
+    private static VerbBuilder verbBuilder = new VerbBuilder();
 
     private Integer id;
     private String russian;
@@ -14,43 +14,46 @@ public class VerbFactory {
     private String description;
     private LocalDate dateOfRegistry;
 
-    public static VerbFactory create() {
-        return verbFactory;
+    private VerbBuilder() {
     }
 
-    public VerbFactory setId(Integer id) {
+    public static VerbBuilder create() {
+        return verbBuilder;
+    }
+
+    public VerbBuilder setId(Integer id) {
         this.id = id;
-        return verbFactory;
+        return verbBuilder;
     }
 
-    public VerbFactory setRussian(String russian) {
+    public VerbBuilder setRussian(String russian) {
         this.russian = russian;
-        return verbFactory;
+        return verbBuilder;
     }
 
-    public VerbFactory setFirstForm(String firstForm) {
+    public VerbBuilder setFirstForm(String firstForm) {
         this.firstForm = firstForm;
-        return verbFactory;
+        return verbBuilder;
     }
 
-    public VerbFactory setSecondForm(String secondForm) {
+    public VerbBuilder setSecondForm(String secondForm) {
         this.secondForm = secondForm;
-        return verbFactory;
+        return verbBuilder;
     }
 
-    public VerbFactory setThirdForm(String thirdForm) {
+    public VerbBuilder setThirdForm(String thirdForm) {
         this.thirdForm = thirdForm;
-        return verbFactory;
+        return verbBuilder;
     }
 
-    public VerbFactory setDescription(String description) {
+    public VerbBuilder setDescription(String description) {
         this.description = description;
-        return verbFactory;
+        return verbBuilder;
     }
 
-    public VerbFactory setDateOfRegistry(LocalDate dateOfRegistry) {
+    public VerbBuilder setDateOfRegistry(LocalDate dateOfRegistry) {
         this.dateOfRegistry = dateOfRegistry;
-        return verbFactory;
+        return verbBuilder;
     }
 
     public Verb build() {
