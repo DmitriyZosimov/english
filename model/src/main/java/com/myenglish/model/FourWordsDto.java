@@ -11,7 +11,7 @@ public class FourWordsDto {
     private Word correctWord;
     private List<Word> fourRandomWords;
 
-    public FourWordsDto(List<Word> fourRandomWords) {
+    FourWordsDto(List<Word> fourRandomWords) {
         this.fourRandomWords = fourRandomWords;
         setCorrectWord();
     }

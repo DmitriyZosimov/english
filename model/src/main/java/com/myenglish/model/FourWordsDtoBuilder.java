@@ -20,8 +20,7 @@ public class FourWordsDtoBuilder {
     }
 
     public FourWordsDto build() {
-        FourWordsDto dto = new FourWordsDto(fourRandomWords);
-        return dto;
+        return new FourWordsDto(fourRandomWords);
     }
 
 }
