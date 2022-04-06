@@ -216,7 +216,7 @@ public class TranslateFromRussianView extends VerticalLayout implements DateFrom
             text = new Text("no transcription");
         }
         Div transcriptionDiv = new Div(text);
-        transcriptionDiv.getStyle().set("color", "#AAA6A5");
+        transcriptionDiv.getStyle().set("color", "grey");
         return transcriptionDiv;
     }
 }
