@@ -2,6 +2,8 @@ package com.myenglish.service;
 
 import com.myenglish.dao.WordDao;
 import com.myenglish.kafka.logger.LoggerProducer;
+import com.myenglish.model.FourWordsDto;
+import com.myenglish.model.FourWordsDtoBuilder;
 import com.myenglish.model.Word;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
@@ -18,7 +20,6 @@ import java.util.Optional;
 @Transactional
 public class WordServiceImpl implements WordService {
 
-    private static int counter = 0;
     private WordDao wordDao;
     private LoggerProducer logger;
     private static final String filePath = System.getProperty("user.home") + "/.english/savedWords.txt";
@@ -30,15 +31,20 @@ public class WordServiceImpl implements WordService {
 
     @Transactional(readOnly = true)
     @Override
-    public List<Word> getFourRandomWords() {
+    public FourWordsDto getFourRandomWords() {
         logger.debug("using getFourRandomWords...", WordServiceImpl.class);
-        return wordDao.getFourRandomWords();
+        return saveWordsToFourWordsDto(wordDao.getFourRandomWords());
     }
 
     @Override
-    public List<Word> getFourRandomWordsByDateFrom(LocalDate date) {
+    public FourWordsDto getFourRandomWordsByDateFrom(LocalDate date) {
         logger.debug("using getFourRandomWordsByDateFrom with date:" + date, WordServiceImpl.class);
-        return wordDao.getFourRandomWordsByDateFrom(date);
+        return saveWordsToFourWordsDto(wordDao.getFourRandomWordsByDateFrom(date));
+    }
+
+    private FourWordsDto saveWordsToFourWordsDto(List<Word> words) {
+        logger.debug("saving words to FourWordsDto in saveWordsToFourDto()", WordServiceImpl.class);
+        return FourWordsDtoBuilder.create().withFourRandomWords(words).build();
     }
 
     @Transactional(readOnly = true)
@@ -73,13 +79,13 @@ public class WordServiceImpl implements WordService {
     @Override
     public void writeSavedWordToTheFile(Word word, @Nullable File file) {
         logger.debug("using writeSavedWordToTheFile with:" + word + " and file:" + file, WordServiceImpl.class);
-        if(file == null) {
+        if (file == null) {
             file = new File(filePath);
         }
         String resultString = String.format("('%s', '%s', '%s', '%s'),%n",
                 word.getEnglish(), word.getRussian(), word.getDescription(),
                 word.getDateOfRegistry().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-        try(PrintWriter printWriter = new PrintWriter(new BufferedWriter(new FileWriter(file, true)))) {
+        try (PrintWriter printWriter = new PrintWriter(new BufferedWriter(new FileWriter(file, true)))) {
             printWriter.print(resultString);
         } catch (IOException e) {
             e.printStackTrace();

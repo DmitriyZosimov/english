@@ -1,6 +1,7 @@
 package com.myenglish.web.angular;
 
 import com.myenglish.kafka.logger.LoggerProducer;
+import com.myenglish.model.FourWordsDto;
 import com.myenglish.model.Word;
 import com.myenglish.service.WordService;
 import org.springframework.http.HttpStatus;
@@ -25,10 +26,10 @@ public class TranslateFromRussianController {
     }
 
     @GetMapping(path = "/translateFromRussian", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Word>> getFourRandomWords() {
+    public ResponseEntity<FourWordsDto> getFourRandomWords() {
         logger.debug("using getFourRandomWords...", TranslateFromRussianController.class);
-        List<Word> words = wordService.getFourRandomWords();
-        return words != null ? new ResponseEntity<>(words, HttpStatus.OK) :
+        FourWordsDto dto = wordService.getFourRandomWords();
+        return dto != null ? new ResponseEntity<>(dto, HttpStatus.OK) :
                 new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

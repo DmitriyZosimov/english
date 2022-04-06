@@ -1,5 +1,6 @@
 package com.myenglish.web.vaadin.ui.views;
 
+import com.myenglish.model.FourWordsDto;
 import com.myenglish.model.Word;
 import com.myenglish.service.WordService;
 import com.myenglish.web.vaadin.ui.MainLayout;
@@ -52,9 +53,9 @@ public class TranslateFromRussianView extends VerticalLayout implements DateFrom
 
     private VerticalLayout buildTestModeMainLayout() {
         testModeMainLayout = new VerticalLayout();
-        List<Word> words = getWordsList();
-        Random random = new Random();
-        Word word = words.get(random.nextInt(words.size()));
+        FourWordsDto dto = getWordsList();
+        List<Word> words = dto.getFourRandomWords();
+        Word word = dto.getCorrectWord();
 
         VerticalLayout labelLayout = new VerticalLayout();
         labelLayout.setAlignItems(Alignment.CENTER);
@@ -107,9 +108,7 @@ public class TranslateFromRussianView extends VerticalLayout implements DateFrom
         answerField.setAutofocus(true);
         answerField.setWidth(500L, Unit.PIXELS);
         answerField.setClearButtonVisible(true);
-        answerField.addValueChangeListener(event -> {
-            result.set(answerField.getValue().equals(word.getEnglish()));
-        });
+        answerField.addValueChangeListener(event -> result.set(answerField.getValue().equals(word.getEnglish())));
         textFieldLayout.add(answerField);
 
         Button enterButton = new Button("Enter");
@@ -161,9 +160,7 @@ public class TranslateFromRussianView extends VerticalLayout implements DateFrom
         HorizontalLayout supportLayout = new HorizontalLayout();
 
         Button selectDateButton = new Button("Select date");
-        selectDateButton.addClickListener(event -> {
-            DialogTools.buildDialogForDate(this).open();
-        });
+        selectDateButton.addClickListener(event -> DialogTools.buildDialogForDate(this).open());
 
         Button testModeButton = new Button("Test mode");
         Button inputModeButton = new Button("Input mode");
@@ -187,7 +184,7 @@ public class TranslateFromRussianView extends VerticalLayout implements DateFrom
         return supportLayout;
     }
 
-    private List<Word> getWordsList() {
+    private FourWordsDto getWordsList() {
         if (dateFrom != null) {
             return wordService.getFourRandomWordsByDateFrom(dateFrom);
         } else {

@@ -2,6 +2,7 @@ package com.myenglish.service;
 
 import com.myenglish.dao.config.DaoHibernateConfig;
 import com.myenglish.kafka.logger.LoggerProducerWithoutKafkaConfig;
+import com.myenglish.model.FourWordsDto;
 import com.myenglish.model.Word;
 import com.myenglish.model.WordBuilder;
 import com.myenglish.service.config.ServiceConfig;
@@ -34,6 +35,28 @@ public class WordServiceImplIT {
         Assertions.assertNotNull(wordService);
     }
 
+    @Test
+    public void getFourRandomWordsTest() {
+        FourWordsDto dto = wordService.getFourRandomWords();
+        Assertions.assertNotNull(dto);
+        Assertions.assertNotNull(dto.getCorrectWord());
+        Assertions.assertNotNull(dto.getFourRandomWords());
+        Assertions.assertTrue(dto.getFourRandomWords().contains(dto.getCorrectWord()));
+    }
+
+    @Test
+    public void getFourRandomWordsByDateFromTest() {
+        LocalDate date = LocalDate.of(2021, 10, 11);
+        FourWordsDto dto = wordService.getFourRandomWordsByDateFrom(date);
+        Assertions.assertNotNull(dto);
+        Assertions.assertNotNull(dto.getCorrectWord());
+        Assertions.assertNotNull(dto.getFourRandomWords());
+        Assertions.assertTrue(dto.getFourRandomWords().contains(dto.getCorrectWord()));
+        for (Word word : dto.getFourRandomWords()) {
+            Assertions.assertTrue(date.isBefore(word.getDateOfRegistry()));
+        }
+    }
+
     @Transactional(propagation = Propagation.NEVER)
     @Test
     public void writeSavedWordToTheFileTest() {
@@ -44,8 +67,8 @@ public class WordServiceImplIT {
                 .build();
         File file = new File("src/test/resources/testSavedWords.txt");
         wordService.writeSavedWordToTheFile(word, file);
-        try(BufferedReader reader = new BufferedReader(new FileReader(file))) {
-            while(reader.ready()) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            while (reader.ready()) {
                 String readSpring = reader.readLine();
                 Assertions.assertNotNull(readSpring);
                 Assertions.assertEquals(result, readSpring);
