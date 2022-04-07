@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @ExtendWith(SpringExtension.class)
-@EmbeddedKafka(partitions = 1, topics = "logger", brokerProperties = {"listeners=PLAINTEXT://localhost:9001", "port=9001"})
+@EmbeddedKafka(partitions = 1, topics = "logger", brokerProperties = {"listeners=PLAINTEXT://localhost:8001", "port=8001"})
 @TestPropertySource(locations = {"classpath:logger-producer-test.properties"})
 @ContextConfiguration(classes = {LoggerProducerConfig.class, TestConsumerConfig.class})
 @ActiveProfiles("kafka")
