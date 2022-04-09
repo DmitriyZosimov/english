@@ -5,6 +5,7 @@ import com.myenglish.kafka.logger.LoggerProducer;
 import com.myenglish.model.FourWordsDto;
 import com.myenglish.model.FourWordsDtoBuilder;
 import com.myenglish.model.Word;
+import com.myenglish.service.filters.RepeatFilter;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -21,11 +22,15 @@ import java.util.Optional;
 public class WordServiceImpl implements WordService {
 
     private WordDao wordDao;
+    private RepeatFilter repeatFilter;
+    private CounterOfAddressingToDB addressingToDB;
     private LoggerProducer logger;
     private static final String filePath = System.getProperty("user.home") + "/.english/savedWords.txt";
 
-    public WordServiceImpl(WordDao wordDao, LoggerProducer loggerProducer) {
+    public WordServiceImpl(WordDao wordDao, RepeatFilter repeatFilter, CounterOfAddressingToDB addressingToDB, LoggerProducer loggerProducer) {
         this.wordDao = wordDao;
+        this.repeatFilter = repeatFilter;
+        this.addressingToDB = addressingToDB;
         this.logger = loggerProducer;
     }
 
@@ -33,13 +38,27 @@ public class WordServiceImpl implements WordService {
     @Override
     public FourWordsDto getFourRandomWords() {
         logger.debug("using getFourRandomWords...", WordServiceImpl.class);
-        return saveWordsToFourWordsDto(wordDao.getFourRandomWords());
+        FourWordsDto fourWordsDto = saveWordsToFourWordsDto(wordDao.getFourRandomWords());
+        addressingToDB.increase();
+        if (addressingToDB.noMoreThanMax() && repeatFilter.isRepeat(fourWordsDto.getCorrectWord())) {
+            return getFourRandomWords();
+        } else {
+            addressingToDB.reset();
+        }
+        return fourWordsDto;
     }
 
     @Override
     public FourWordsDto getFourRandomWordsByDateFrom(LocalDate date) {
         logger.debug("using getFourRandomWordsByDateFrom with date:" + date, WordServiceImpl.class);
-        return saveWordsToFourWordsDto(wordDao.getFourRandomWordsByDateFrom(date));
+        FourWordsDto fourWordsDto = saveWordsToFourWordsDto(wordDao.getFourRandomWordsByDateFrom(date));
+        addressingToDB.increase();
+        if (addressingToDB.noMoreThanMax() && repeatFilter.isRepeat(fourWordsDto.getCorrectWord())) {
+            return getFourRandomWordsByDateFrom(date);
+        } else {
+            addressingToDB.reset();
+        }
+        return fourWordsDto;
     }
 
     private FourWordsDto saveWordsToFourWordsDto(List<Word> words) {
