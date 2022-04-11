@@ -3,6 +3,7 @@ package com.myenglish.web.vaadin.ui.views;
 import com.myenglish.model.FourWordsDto;
 import com.myenglish.model.Word;
 import com.myenglish.service.WordService;
+import com.myenglish.service.filters.WordsBaseFiller;
 import com.myenglish.web.vaadin.ui.MainLayout;
 import com.myenglish.web.vaadin.ui.utils.DialogTools;
 import com.vaadin.flow.component.Key;
@@ -32,6 +33,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class TranslateFromRussianView extends VerticalLayout implements DateFromView {
 
     private WordService wordService;
+    private WordsBaseFiller filler;
 
     private VerticalLayout testModeMainLayout;
     private VerticalLayout inputModeMainLayout;
@@ -40,8 +42,9 @@ public class TranslateFromRussianView extends VerticalLayout implements DateFrom
     private boolean isTestMode = true;
 
     @Autowired
-    public TranslateFromRussianView(WordService wordService) {
+    public TranslateFromRussianView(WordService wordService, WordsBaseFiller filler) {
         this.wordService = wordService;
+        this.filler = filler;
         createContent();
     }
 
@@ -76,9 +79,11 @@ public class TranslateFromRussianView extends VerticalLayout implements DateFrom
             wordButton.addClickListener(event -> {
                 if (word.equals(wordForButton)) {
                     wordButton.addThemeVariants(ButtonVariant.LUMO_SUCCESS);
+                    filler.fill(word);
                     replace(testModeMainLayout, buildTestModeMainLayout());
                 } else {
                     wordButton.addThemeVariants(ButtonVariant.LUMO_ERROR);
+                    filler.remove(word);
                 }
                 wordButton.removeThemeVariants(ButtonVariant.LUMO_CONTRAST);
             });
@@ -118,9 +123,11 @@ public class TranslateFromRussianView extends VerticalLayout implements DateFrom
             if (result.get()) {
                 icon = new Icon(VaadinIcon.CHECK);
                 icon.setColor("green");
+                filler.fill(word);
             } else {
                 icon = new Icon(VaadinIcon.CLOSE_SMALL);
                 icon.setColor("red");
+                filler.remove(word);
             }
             textFieldLayout.add(icon);
         });
