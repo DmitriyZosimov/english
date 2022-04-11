@@ -21,4 +21,9 @@ public class ProperlyAnsweredWordsBaseFiller implements WordsBaseFiller {
         count++;
         base.getBase().put(word, count);
     }
+
+    @Override
+    public void remove(Word word) {
+        base.getBase().remove(word);
+    }
 }

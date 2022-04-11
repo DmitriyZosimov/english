@@ -13,4 +13,10 @@ public interface WordsBaseFiller {
      * @param word - properly answered word.
      */
     void fill(Word word);
+
+    /**
+     * Remove the word from a base
+     * @param word - will be removed
+     */
+    void remove(Word word);
 }

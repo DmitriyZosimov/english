@@ -47,6 +47,20 @@ public class ProperlyAnsweredWordsBaseFillerMockito extends AppenderMockitoExten
         Assertions.assertEquals(4, base.getBase().get(word));
     }
 
+    @Test
+    public void removeWordFromBaseTest() {
+        Word word = buildWord(1, "english", "russian");
+        filler.fill(word);
+        Assertions.assertEquals(1, base.getBase().get(word));
+
+        filler.remove(word);
+        Assertions.assertFalse(base.getBase().containsKey(word));
+
+        filler.remove(word);
+        Assertions.assertFalse(base.getBase().containsKey(word));
+
+    }
+
     private Word buildWord(int id, String english, String russian) {
         return WordBuilder.create().withId(id).withEnglish(english)
                 .withRussian(russian).withDateOfRegistry(LocalDate.now()).build();
