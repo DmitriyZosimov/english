@@ -6,8 +6,8 @@ import com.myenglish.model.FourWordsDto;
 import com.myenglish.model.Word;
 import com.myenglish.model.WordBuilder;
 import com.myenglish.service.filters.DefaultRepeatFilter;
-import com.myenglish.service.filters.ProperlyAnsweredWordsBase;
 import com.myenglish.service.filters.RepeatFilter;
+import com.myenglish.service.filters.WordsBase;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -32,8 +32,8 @@ public class WordServiceImplMockito extends AppenderMockitoExtension {
     WordDao wordDao;
     @Mock
     LoggerProducer loggerProducer;
-    @Spy
-    ProperlyAnsweredWordsBase base = new ProperlyAnsweredWordsBase();
+    @Mock
+    WordsBase<Integer> base;
     @Spy
     RepeatFilter repeatFilter = new DefaultRepeatFilter(this.base);
     @Spy
@@ -44,6 +44,7 @@ public class WordServiceImplMockito extends AppenderMockitoExtension {
     @BeforeEach
     public void setup() {
         buildWordsList();
+        buildDefaultProperlyAnsweredWordBase();
         setupWordDao();
         setupSpies();
     }
@@ -79,7 +80,6 @@ public class WordServiceImplMockito extends AppenderMockitoExtension {
     }
 
     private void setupSpies() {
-        buildDefaultProperlyAnsweredWordBase();
         buildRepeatFilter();
         buildCounterOfAddressingToDB();
     }
@@ -93,7 +93,7 @@ public class WordServiceImplMockito extends AppenderMockitoExtension {
         }
 
         map.put(words.get(3), 1);
-        base.setBase(map);
+        when(base.getBase()).thenReturn(map);
     }
 
     private void buildRepeatFilter() {

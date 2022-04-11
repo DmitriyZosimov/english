@@ -13,9 +13,9 @@ public class DefaultRepeatFilter implements RepeatFilter {
 
     @Value("${filter.repeat.max}")
     private int max;
-    private ProperlyAnsweredWordsBase base;
+    private WordsBase<Integer> base;
 
-    public DefaultRepeatFilter(ProperlyAnsweredWordsBase base) {
+    public DefaultRepeatFilter(WordsBase<Integer> base) {
         this.base = base;
     }
 
@@ -24,7 +24,7 @@ public class DefaultRepeatFilter implements RepeatFilter {
         return getRepeatCount(word) >= max;
     }
 
-    public void setBase(ProperlyAnsweredWordsBase base) {
+    public void setBase(WordsBase<Integer> base) {
         this.base = base;
     }
 

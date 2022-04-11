@@ -6,11 +6,14 @@ import com.myenglish.model.FourWordsDto;
 import com.myenglish.model.Word;
 import com.myenglish.model.WordBuilder;
 import com.myenglish.service.config.ServiceConfig;
+import com.myenglish.service.filters.WordsBase;
 import com.myenglish.testdb.TestH2DB;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -19,9 +22,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.*;
 import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = {ServiceConfig.class, TestH2DB.class, DaoHibernateConfig.class,
+@ContextConfiguration(classes = {TestConfiguration.class, ServiceConfig.class, TestH2DB.class, DaoHibernateConfig.class,
         LoggerProducerWithoutKafkaConfig.class})
 @Transactional
 @ActiveProfiles("withoutKafka")
@@ -79,5 +84,33 @@ public class WordServiceImplIT {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+}
+
+class TestWordsBase implements WordsBase<Integer> {
+    private Map<Word, Integer> base;
+
+    public TestWordsBase() {
+        this.base = new HashMap<>();
+    }
+
+    public Map<Word, Integer> getBase() {
+        return this.base;
+    }
+
+    public void setBase(Map<Word, Integer> base) {
+        if (base == null) {
+            throw new NullPointerException("Base must not be null...");
+        }
+        this.base = base;
+    }
+}
+
+@Configuration
+class TestConfiguration {
+
+    @Bean
+    public WordsBase<Integer> getWordsBase() {
+        return new TestWordsBase();
     }
 }

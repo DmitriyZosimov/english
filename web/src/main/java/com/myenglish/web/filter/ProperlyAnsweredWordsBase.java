@@ -1,7 +1,9 @@
-package com.myenglish.service.filters;
+package com.myenglish.web.filter;
 
 import com.myenglish.model.Word;
+import com.myenglish.service.filters.WordsBase;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.annotation.SessionScope;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,7 +12,8 @@ import java.util.Map;
  * Class contains the database of correctly answered words that is used to decrease repeats.
  */
 @Component
-public class ProperlyAnsweredWordsBase {
+@SessionScope
+public class ProperlyAnsweredWordsBase implements WordsBase<Integer> {
 
     private Map<Word, Integer> base;
 
