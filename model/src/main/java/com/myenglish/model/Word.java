@@ -25,6 +25,14 @@ public class Word {
     @Column(name = "transcription")
     private String transcription;
 
+    public String getTranscriptionOrBlank() {
+        return transcription != null ? transcription : "";
+    }
+
+    public String getDescriptionOrBlank() {
+        return description != null ? description : "";
+    }
+
     @PrePersist
     public void setupDate() {
         dateOfRegistry = LocalDate.now();
