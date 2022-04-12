@@ -3,7 +3,7 @@
 The web application is to study english words
 
 ## Requirements
-* Java 8
+* Java 11
 * Apache Tomcat
 * PostgreSQL or AWS RDS
 * (Optional) Apache Kafka
