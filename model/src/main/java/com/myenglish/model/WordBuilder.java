@@ -54,6 +54,16 @@ public class WordBuilder {
         word.setDescription(description);
         word.setDateOfRegistry(dateOfRegistry);
         word.setTranscription(transcription);
+        clean();
         return word;
+    }
+
+    private void clean() {
+        id = null;
+        english = null;
+        russian = null;
+        description = null;
+        dateOfRegistry = null;
+        transcription = null;
     }
 }
