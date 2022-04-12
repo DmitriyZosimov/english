@@ -16,7 +16,7 @@ There are few profiles:
 
 
 * **withoutKafka** - is used if Kafka wasn't enabled.
-* **withKafka** - is used if Kafka was enabled and launched.
+* **kafka** - is used if Kafka was enabled and launched.
 
 ## Setup Apache Tomcat
 ```
