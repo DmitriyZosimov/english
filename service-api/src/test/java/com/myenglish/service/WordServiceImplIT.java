@@ -104,6 +104,11 @@ class TestWordsBase implements WordsBase<Integer> {
         }
         this.base = base;
     }
+
+    @Override
+    public void printBase() {
+
+    }
 }
 
 @Configuration
