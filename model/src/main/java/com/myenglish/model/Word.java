@@ -32,7 +32,7 @@ public class Word {
 
     @Override
     public String toString() {
-        return String.format("%s%15s%15s%n%10s%20s%n%s", "English:", transcription, "Russian:", english, russian, description);
+        return String.format("%s %s%15s%10s %s%15s", "English:", english, transcription, "Russian:", russian, description);
     }
 
     @Override
