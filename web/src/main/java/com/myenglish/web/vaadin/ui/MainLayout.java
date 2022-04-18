@@ -1,5 +1,6 @@
 package com.myenglish.web.vaadin.ui;
 
+import com.myenglish.web.vaadin.ui.newformat.views.decorator.TestDecorator;
 import com.myenglish.web.vaadin.ui.views.*;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.applayout.AppLayout;
@@ -41,7 +42,7 @@ public class MainLayout extends AppLayout{
 
     }
 
-    private H1 viewTitle;
+    private H3 viewTitle;
 
     public MainLayout() {
         setPrimarySection(AppLayout.Section.DRAWER);
@@ -55,10 +56,11 @@ public class MainLayout extends AppLayout{
         toggle.addThemeVariants(ButtonVariant.LUMO_CONTRAST);
         toggle.getElement().setAttribute("aria-label", "Menu toggle");
 
-        viewTitle = new H1();
+        viewTitle = new H3();
         viewTitle.addClassNames("m-0", "text-l");
 
         Header header = new Header(toggle, viewTitle);
+        header.setMaxHeight("100px");
         header.addClassNames("bg-base", "border-b", "border-contrast-10", "box-border", "flex", "h-xl", "items-center",
                 "w-full");
         return header;
@@ -107,6 +109,7 @@ public class MainLayout extends AppLayout{
                 new MenuItemInfo("Add a verb", "la la-arrow-right", AddVerbView.class),
 
                 new MenuItemInfo("About", "la la-file", AboutView.class),
+                new MenuItemInfo("Test", "la la-file", TestDecorator.class),
 
         };
         List<RouterLink> links = new ArrayList<>();
