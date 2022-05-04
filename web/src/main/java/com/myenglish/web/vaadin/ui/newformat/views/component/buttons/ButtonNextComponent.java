@@ -1,6 +1,5 @@
 package com.myenglish.web.vaadin.ui.newformat.views.component.buttons;
 
-import com.myenglish.model.FourWordsDto;
 import com.myenglish.web.vaadin.ui.newformat.views.ButtonsNames;
 import com.myenglish.web.vaadin.ui.newformat.views.component.ChainOfResponsibilityHandler;
 import com.myenglish.web.vaadin.ui.newformat.views.component.VaadinComponent;
@@ -34,7 +33,7 @@ public class ButtonNextComponent implements VaadinComponent, ChainOfResponsibili
     }
 
     @Override
-    public void handleRequest(Composite composite, FourWordsDto dto) {
+    public void handleRequest(Composite composite, Object word) {
         composite.add(this);
     }
 }

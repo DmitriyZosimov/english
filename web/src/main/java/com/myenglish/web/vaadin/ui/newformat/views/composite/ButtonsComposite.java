@@ -1,6 +1,5 @@
 package com.myenglish.web.vaadin.ui.newformat.views.composite;
 
-import com.myenglish.model.FourWordsDto;
 import com.myenglish.web.vaadin.ui.newformat.views.component.ChainOfResponsibilityHandler;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
@@ -22,12 +21,17 @@ public class ButtonsComposite extends AbstractComposite implements ChainOfRespon
     public Component operation() {
         layout.removeAll();
         super.getComponents().forEach(component -> layout.add(component.operation()));
-        layout.setAlignItems(FlexComponent.Alignment.CENTER);
+        layout.setVerticalComponentAlignment(FlexComponent.Alignment.CENTER);
         return layout;
     }
 
     @Override
-    public void handleRequest(Composite composite, FourWordsDto dto) {
+    public void handleRequest(Composite composite, Object dto) {
         composite.add(this);
+    }
+
+    @Override
+    public HorizontalLayout getLayout() {
+        return this.layout;
     }
 }

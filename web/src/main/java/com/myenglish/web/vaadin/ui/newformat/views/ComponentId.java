@@ -12,5 +12,6 @@ public class ComponentId {
     public static final String WORD_INPUT = "word-input";
     public static final String BODY = "body";
     public static final String BUTTONS_TEST = "buttons-test";
+    public static final String BUTTONS_INPUT = "buttons-input";
     public static final String BUTTONS_SUPPORT = "buttons-support";
 }

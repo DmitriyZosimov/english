@@ -1,6 +1,7 @@
 package com.myenglish.web.vaadin.ui.newformat.views.component;
 
 import com.myenglish.model.FourWordsDto;
+import com.myenglish.model.Word;
 import com.myenglish.web.vaadin.ui.newformat.views.ComponentId;
 import com.myenglish.web.vaadin.ui.newformat.views.composite.Composite;
 import com.vaadin.flow.component.Component;
@@ -33,9 +34,17 @@ public class RussianWordComponent implements VaadinComponent, ChainOfResponsibil
     }
 
     @Override
-    public void handleRequest(Composite composite, FourWordsDto dto) {
-        this.russian = dto.getCorrectWord().getRussian();
+    public void handleRequest(Composite composite, Object word) {
+        if (word instanceof FourWordsDto) {
+            this.russian = ((FourWordsDto) word).getCorrectWord().getRussian();
+        } else if (word instanceof Word) {
+            this.russian = ((Word) word).getRussian();
+        } else {
+            throw new IllegalArgumentException("Can't get Russian word. The object " + word
+                    + " must be a class instance of FourWordDto.class or Word.class");
+        }
         composite.add(this);
-        nextHandler.handleRequest(composite, dto);
+        nextHandler.handleRequest(composite, word);
     }
+
 }

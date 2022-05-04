@@ -23,7 +23,8 @@ public class TestButtonsComponent implements VaadinComponent, ChainOfResponsibil
     private TestDecorator testDecorator;
     private ChainOfResponsibilityHandler nextHandler;
 
-    public TestButtonsComponent(TestDecorator testDecorator, WordsBaseFiller filler, ChainOfResponsibilityHandler handler) {
+    public TestButtonsComponent(TestDecorator testDecorator, WordsBaseFiller filler,
+                                ChainOfResponsibilityHandler handler) {
         this.filler = filler;
         this.testDecorator = testDecorator;
         this.nextHandler = handler;
@@ -64,9 +65,14 @@ public class TestButtonsComponent implements VaadinComponent, ChainOfResponsibil
     }
 
     @Override
-    public void handleRequest(Composite composite, FourWordsDto dto) {
-        this.dto = dto;
+    public void handleRequest(Composite composite, Object word) {
+        if (word instanceof FourWordsDto) {
+            this.dto = (FourWordsDto) word;
+        } else {
+            throw new IllegalArgumentException("Can't get Dto. The object " + word
+                    + " must be a class instance of FourWordDto.class");
+        }
         composite.add(this);
-        nextHandler.handleRequest(composite, dto);
+        nextHandler.handleRequest(composite, word);
     }
 }

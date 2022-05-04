@@ -2,6 +2,7 @@ package com.myenglish.web.vaadin.ui.newformat.views.composite;
 
 import com.myenglish.web.vaadin.ui.newformat.views.component.VaadinComponent;
 import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 
 import java.util.Arrays;
@@ -48,7 +49,8 @@ public abstract class AbstractComposite implements Composite {
         return components;
     }
 
-    public VerticalLayout getLayout() {
+    //TODO: fix return element
+    public FlexComponent getLayout() {
         return layout;
     }
 }

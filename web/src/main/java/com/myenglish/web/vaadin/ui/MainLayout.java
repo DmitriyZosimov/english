@@ -1,5 +1,6 @@
 package com.myenglish.web.vaadin.ui;
 
+import com.myenglish.web.vaadin.ui.newformat.views.decorator.InputDecorator;
 import com.myenglish.web.vaadin.ui.newformat.views.decorator.TestDecorator;
 import com.myenglish.web.vaadin.ui.views.*;
 import com.vaadin.flow.component.Component;
@@ -100,7 +101,8 @@ public class MainLayout extends AppLayout{
     private List<RouterLink> createLinks() {
         MenuItemInfo[] menuItems = new MenuItemInfo[]{
                 new MenuItemInfo("Home", "la la-globe", HomeView.class),
-                new MenuItemInfo("Translate from russian", "la la-globe", TranslateFromRussianView.class),
+                new MenuItemInfo("Translate from russian (test)", "la la-globe", TestDecorator.class),
+                new MenuItemInfo("Translate from russian (input)", "la la-globe", InputDecorator.class),
 
                 new MenuItemInfo("Add a new word", "la la-arrow-right", AddANewWordView.class),
 
@@ -108,8 +110,7 @@ public class MainLayout extends AppLayout{
                 new MenuItemInfo("Verbs", "la la-arrow-right", VerbView.class),
                 new MenuItemInfo("Add a verb", "la la-arrow-right", AddVerbView.class),
 
-                new MenuItemInfo("About", "la la-file", AboutView.class),
-                new MenuItemInfo("Test", "la la-file", TestDecorator.class),
+                new MenuItemInfo("About", "la la-file", AboutView.class)
 
         };
         List<RouterLink> links = new ArrayList<>();

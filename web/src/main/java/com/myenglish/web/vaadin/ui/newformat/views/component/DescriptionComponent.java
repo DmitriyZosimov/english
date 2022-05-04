@@ -1,6 +1,7 @@
 package com.myenglish.web.vaadin.ui.newformat.views.component;
 
 import com.myenglish.model.FourWordsDto;
+import com.myenglish.model.Word;
 import com.myenglish.web.vaadin.ui.newformat.views.ComponentId;
 import com.myenglish.web.vaadin.ui.newformat.views.composite.Composite;
 import com.vaadin.flow.component.Component;
@@ -33,9 +34,16 @@ public class DescriptionComponent implements VaadinComponent, ChainOfResponsibil
     }
 
     @Override
-    public void handleRequest(Composite composite, FourWordsDto dto) {
-        this.description = dto.getCorrectWord().getDescriptionOrBlank();
+    public void handleRequest(Composite composite, Object word) {
+        if (word instanceof FourWordsDto) {
+            this.description = ((FourWordsDto) word).getCorrectWord().getDescriptionOrBlank();
+        } else if (word instanceof Word) {
+            this.description = ((Word) word).getDescriptionOrBlank();
+        } else {
+            throw new IllegalArgumentException("Can't get Description of the word. The object " + word
+                    + " must be a class instance of FourWordDto.class or Word.class");
+        }
         composite.add(this);
-        nextHandler.handleRequest(composite, dto);
+        nextHandler.handleRequest(composite, word);
     }
 }
