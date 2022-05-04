@@ -16,6 +16,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,6 +31,7 @@ import java.util.Map;
         LoggerProducerWithoutKafkaConfig.class})
 @Transactional
 @ActiveProfiles("withoutKafka")
+@TestPropertySource(properties = {"hibernate.dialect=org.hibernate.dialect.H2Dialect"})
 public class WordServiceImplIT {
 
     @Autowired
