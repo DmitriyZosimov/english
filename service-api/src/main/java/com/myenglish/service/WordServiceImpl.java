@@ -89,6 +89,7 @@ public class WordServiceImpl implements WordService {
     @Override
     public Word saveOrUpdateWord(Word word) {
         logger.debug("using saveOrUpdateWord with word:" + word, WordServiceImpl.class);
+        prepareWord(word);
         Word savedWord = wordDao.saveOrUpdateWord(word);
         writeSavedWordToTheFile(savedWord, null);
         return savedWord;
@@ -108,6 +109,24 @@ public class WordServiceImpl implements WordService {
             printWriter.print(resultString);
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    private void prepareWord(Word word) {
+        word.setEnglish(word.getEnglish().trim().toLowerCase());
+        word.setRussian(word.getRussian().trim().toLowerCase());
+        if (word.getDescription() != null) {
+            word.setDescription(word.getDescription().trim());
+        }
+        if (word.getTranscription() != null) {
+            StringBuilder transcription = new StringBuilder(word.getTranscription().trim());
+            if (transcription.indexOf("[") != 0) {
+                transcription.insert(0, "[");
+            }
+            if (transcription.lastIndexOf("]") != transcription.length() - 1) {
+                transcription.append("]");
+            }
+            word.setTranscription(transcription.toString());
         }
     }
 }

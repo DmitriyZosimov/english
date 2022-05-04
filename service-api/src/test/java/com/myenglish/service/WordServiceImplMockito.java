@@ -15,6 +15,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
 
+import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -34,6 +35,8 @@ public class WordServiceImplMockito extends AppenderMockitoExtension {
     LoggerProducer loggerProducer;
     @Mock
     WordsBase<Integer> base;
+    @Mock
+    PrintWriter printWriter;
     @Spy
     RepeatFilter repeatFilter = new DefaultRepeatFilter(this.base);
     @Spy
@@ -77,6 +80,25 @@ public class WordServiceImplMockito extends AppenderMockitoExtension {
         FourWordsDto dto = wordService.getFourRandomWordsByDateFrom(LocalDate.now());
         Assertions.assertNotNull(dto);
         verify(wordDao, times(5)).getFourRandomWordsByDateFrom(any());
+    }
+
+    @Test
+    public void saveOrUpdateWordTest() {
+        Word oldWord = WordBuilder.create().withEnglish(" UPPER ").withRussian(" L OWER ").withDescription(" TRIM ")
+                .withTranscription("trans").withDateOfRegistry(LocalDate.now()).build();
+
+        when(wordDao.saveOrUpdateWord(any())).thenAnswer(invocation -> {
+            Word savedWord = invocation.getArgument(0);
+            Assertions.assertEquals(oldWord.getEnglish().toLowerCase().trim(), savedWord.getEnglish());
+            Assertions.assertEquals(oldWord.getRussian().toLowerCase().trim(), savedWord.getRussian());
+            Assertions.assertEquals(oldWord.getDescription().trim(), savedWord.getDescription());
+            Assertions.assertTrue(savedWord.getTranscription().contains("["));
+            Assertions.assertTrue(savedWord.getTranscription().contains("]"));
+            return savedWord;
+        });
+
+        wordService.saveOrUpdateWord(oldWord);
+        verify(wordDao, times(1)).saveOrUpdateWord(any());
     }
 
     private void setupSpies() {
