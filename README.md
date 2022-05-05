@@ -12,7 +12,7 @@ The web application is to study english words
 ## Profiles
 There are few profiles:
 * **local** - is used if PostgreSQL was selected as DB.
-* **rds** - is used if AWS RDS was selected as DB.
+* **aws** - is used if AWS RDS was selected as DB.
 
 
 * **withoutKafka** - is used if Kafka wasn't enabled.
