@@ -16,7 +16,7 @@ jobs:
       # Label used to access the service container
       postgres:
         # Docker Hub image
-        image: postgres
+        image: postgres:12
         # Provide the password for postgres
         env:
           POSTGRES_USER: postgres
@@ -36,8 +36,7 @@ jobs:
       # Downloads a copy of the code in your repository before running CI tests
     - uses: actions/checkout@v2
     - name: Install dependencies
-      run: npm ci
-
+      run: npm install
     - name: Connect to PostgreSQL
       # Runs script that creates a PostgreSQL table, populates the table with data and then retrieves the data
       run: node client.js
