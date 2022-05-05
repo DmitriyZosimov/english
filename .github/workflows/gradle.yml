@@ -36,7 +36,9 @@ jobs:
       # Downloads a copy of the code in your repository before running CI tests
     - uses: actions/checkout@v2
     - name: Install dependencies
-      run: sudo apt install nodejs
+      run: |
+        sudo apt install nodejs
+        npm install pg
     - name: Connect to PostgreSQL
       # Runs script that creates a PostgreSQL table, populates the table with data and then retrieves the data
       run: node ./.github/workflows/client.js
