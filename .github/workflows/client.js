@@ -11,7 +11,7 @@ const pgclient = new Client({
 pgclient.connect();
 
 const table = 'CREATE TABLE words (\n' +
-    '    id INTEGER NOT NULL AUTO_INCREMENT,\n' +
+    '    id INTEGER NOT NULL SERIAL,\n' +
     '    english varchar(50) NOT NULL,\n' +
     '    russian varchar(50) NOT NULL,\n' +
     '    description varchar(255),\n' +
@@ -21,7 +21,7 @@ const table = 'CREATE TABLE words (\n' +
     ');\n' +
     '\n' +
     'CREATE TABLE verbs (\n' +
-    '    id INTEGER NOT NULL AUTO_INCREMENT,\n' +
+    '    id INTEGER NOT NULL SERIAL,\n' +
     '    russian varchar(50) NOT NULL,\n' +
     '    first_form varchar(50) NOT NULL,\n' +
     '    second_form varchar(50) NOT NULL,\n' +
