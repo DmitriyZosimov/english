@@ -6,6 +6,7 @@ import com.myenglish.web.vaadin.ui.newformat.views.component.buttons.ButtonTestM
 import com.myenglish.web.vaadin.ui.newformat.views.composite.BodyComposite;
 import com.myenglish.web.vaadin.ui.newformat.views.composite.ButtonsComposite;
 import com.vaadin.flow.component.Component;
+import com.vaadin.flow.spring.annotation.VaadinSessionScope;
 
 import java.time.LocalDate;
 
@@ -13,6 +14,7 @@ import java.time.LocalDate;
  * It's a view of translation from russian and also is a concrete component of a decorate design pattern.
  */
 @org.springframework.stereotype.Component
+@VaadinSessionScope
 public class TranslateView implements View, DateFrom {
 
     private Component component;

@@ -21,6 +21,7 @@ import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.spring.annotation.VaadinSessionScope;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -32,6 +33,7 @@ import java.util.stream.Collectors;
  */
 @PageTitle("Input")
 @Route(value = "word/input", layout = MainLayout.class)
+@VaadinSessionScope
 public class InputDecorator extends VerticalLayout implements Decorator {
 
     private TranslateView view;
@@ -45,6 +47,7 @@ public class InputDecorator extends VerticalLayout implements Decorator {
 
     @Autowired
     public InputDecorator(TranslateView view, WordService wordService, WordsBaseFiller filler) {
+        removeAll();
         this.view = view;
         this.wordService = wordService;
         this.filler = filler;

@@ -18,6 +18,7 @@ import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.spring.annotation.VaadinSessionScope;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -25,6 +26,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 @PageTitle("Test")
 @Route(value = "word/test", layout = MainLayout.class)
+@VaadinSessionScope
 public class TestDecorator extends VerticalLayout implements Decorator {
 
     private TranslateView view;
@@ -36,6 +38,7 @@ public class TestDecorator extends VerticalLayout implements Decorator {
 
     @Autowired
     public TestDecorator(WordService wordService, WordsBaseFiller filler, TranslateView view) {
+        removeAll();
         this.view = view;
         this.wordService = wordService;
         this.filler = filler;
