@@ -15,9 +15,4 @@ public interface Decorator extends View {
      * @return object that keep simple inseparable components ({@link com.myenglish.web.vaadin.ui.newformat.views.component.VaadinComponent})
      */
     Composite buildComposite();
-
-    /**
-     * Refresh current components
-     */
-    void refresh();
 }

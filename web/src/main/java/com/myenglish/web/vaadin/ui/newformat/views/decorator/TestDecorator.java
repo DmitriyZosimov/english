@@ -27,7 +27,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 @PageTitle("Test")
 @Route(value = "word/test", layout = MainLayout.class)
 @VaadinSessionScope
-public class TestDecorator extends VerticalLayout implements Decorator {
+public class TestDecorator extends VerticalLayout implements Decorator, Refreshable {
 
     private TranslateView view;
     private WordService wordService;

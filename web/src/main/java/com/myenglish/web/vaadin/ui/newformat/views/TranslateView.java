@@ -32,11 +32,6 @@ public class TranslateView implements View, DateFrom {
     }
 
     @Override
-    public void clean() {
-
-    }
-
-    @Override
     public void setDateFrom(LocalDate dateFrom) {
         this.dateFrom = dateFrom;
     }

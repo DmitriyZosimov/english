@@ -34,7 +34,7 @@ import java.util.stream.Collectors;
 @PageTitle("Input")
 @Route(value = "word/input", layout = MainLayout.class)
 @VaadinSessionScope
-public class InputDecorator extends VerticalLayout implements Decorator {
+public class InputDecorator extends VerticalLayout implements Decorator, Refreshable {
 
     private TranslateView view;
     private WordService wordService;

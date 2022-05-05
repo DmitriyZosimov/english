@@ -14,8 +14,4 @@ public interface View {
      */
     Component buildView();
 
-    /**
-     * Clean the component that was built by {@code buildView()}.
-     */
-    void clean();
 }

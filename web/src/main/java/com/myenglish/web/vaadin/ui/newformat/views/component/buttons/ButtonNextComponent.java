@@ -5,6 +5,7 @@ import com.myenglish.web.vaadin.ui.newformat.views.component.ChainOfResponsibili
 import com.myenglish.web.vaadin.ui.newformat.views.component.VaadinComponent;
 import com.myenglish.web.vaadin.ui.newformat.views.composite.Composite;
 import com.myenglish.web.vaadin.ui.newformat.views.decorator.Decorator;
+import com.myenglish.web.vaadin.ui.newformat.views.decorator.Refreshable;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.KeyModifier;
@@ -16,10 +17,10 @@ import com.vaadin.flow.component.html.Div;
  */
 public class ButtonNextComponent implements VaadinComponent, ChainOfResponsibilityHandler {
 
-    private Decorator decorator;
+    private Refreshable refreshable;
 
-    public ButtonNextComponent(Decorator decorator) {
-        this.decorator = decorator;
+    public ButtonNextComponent(Refreshable refreshable) {
+        this.refreshable = refreshable;
     }
 
     @Override
@@ -27,7 +28,7 @@ public class ButtonNextComponent implements VaadinComponent, ChainOfResponsibili
         Div div = new Div();
         Button button = new Button(ButtonsNames.NEXT);
         button.addClickShortcut(Key.ARROW_RIGHT, KeyModifier.CONTROL);
-        button.addClickListener(event -> decorator.refresh());
+        button.addClickListener(event -> refreshable.refresh());
         div.add(button);
         return div;
     }
