@@ -10,7 +10,26 @@ const pgclient = new Client({
 
 pgclient.connect();
 
-const table = 'CREATE TABLE words (id INTEGER NOT NULL SERIAL, english varchar(50) NOT NULL, russian varchar(50) NOT NULL, description varchar(255), date_of_registry date, transcription varchar(50), PRIMARY KEY(id)); CREATE TABLE verbs (id INTEGER NOT NULL SERIAL, russian varchar(50) NOT NULL, first_form varchar(50) NOT NULL, second_form varchar(50) NOT NULL, third_form varchar(50) NOT NULL, description varchar(255), date_of_registry date, PRIMARY KEY(id));'
+const table = 'CREATE TABLE words (\n' +
+    '    id SERIAL,\n' +
+    '    english varchar(50) NOT NULL,\n' +
+    '    russian varchar(50) NOT NULL,\n' +
+    '    description varchar(255),\n' +
+    '    date_of_registry date,\n' +
+    '    transcription varchar(50),\n' +
+    '    PRIMARY KEY(id)\n' +
+    ');\n' +
+    '\n' +
+    'CREATE TABLE verbs (\n' +
+    '    id SERIAL,\n' +
+    '    russian varchar(50) NOT NULL,\n' +
+    '    first_form varchar(50) NOT NULL,\n' +
+    '    second_form varchar(50) NOT NULL,\n' +
+    '    third_form varchar(50) NOT NULL,\n' +
+    '    description varchar(255),\n' +
+    '    date_of_registry date,\n' +
+    '    PRIMARY KEY(id)\n' +
+    ');'
 const text = 'INSERT INTO words(english, russian, description, date_of_registry, transcription) VALUES($1, $2, $3, $4, $5) RETURNING *'
 const values = ['hello', 'здравствуйте', 'здравствуйте', '2021-01-01', null]
 
