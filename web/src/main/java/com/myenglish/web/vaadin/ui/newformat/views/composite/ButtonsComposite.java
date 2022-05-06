@@ -1,7 +1,6 @@
 package com.myenglish.web.vaadin.ui.newformat.views.composite;
 
 import com.myenglish.web.vaadin.ui.newformat.views.component.ChainOfResponsibilityHandler;
-import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 
@@ -12,7 +11,7 @@ public class ButtonsComposite extends AbstractComposite implements ChainOfRespon
 
     public ButtonsComposite(String id) {
         super(new HorizontalLayout());
-        ((HorizontalLayout)super.getLayout()).setVerticalComponentAlignment(FlexComponent.Alignment.CENTER);
+        ((HorizontalLayout) super.getLayout()).setVerticalComponentAlignment(FlexComponent.Alignment.CENTER);
         setId(id);
     }
 

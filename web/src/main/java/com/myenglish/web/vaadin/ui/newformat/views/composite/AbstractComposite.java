@@ -3,7 +3,6 @@ package com.myenglish.web.vaadin.ui.newformat.views.composite;
 import com.myenglish.web.vaadin.ui.newformat.views.component.VaadinComponent;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.HasComponents;
-import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 
 import java.util.Arrays;
@@ -31,7 +30,7 @@ public abstract class AbstractComposite implements Composite {
 
     public void setId(String id) {
         this.id = id;
-        ((Component)layout).setId(this.id);
+        ((Component) layout).setId(this.id);
     }
 
     @Override
