@@ -9,10 +9,4 @@ import com.myenglish.web.vaadin.ui.newformat.views.composite.Composite;
  */
 public interface Decorator extends View {
 
-    /**
-     * Builds combination more simple objects
-     *
-     * @return object that keep simple inseparable components ({@link com.myenglish.web.vaadin.ui.newformat.views.component.VaadinComponent})
-     */
-    Composite buildComposite();
 }

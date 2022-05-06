@@ -13,6 +13,7 @@ import com.myenglish.web.vaadin.ui.newformat.views.component.TitleComponent;
 import com.myenglish.web.vaadin.ui.newformat.views.component.buttons.ButtonNextComponent;
 import com.myenglish.web.vaadin.ui.newformat.views.composite.ButtonsComposite;
 import com.myenglish.web.vaadin.ui.newformat.views.composite.Composite;
+import com.myenglish.web.vaadin.ui.newformat.views.composite.CompositeBuilder;
 import com.myenglish.web.vaadin.ui.newformat.views.composite.TestComposite;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -27,7 +28,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 @PageTitle("Test")
 @Route(value = "word/test", layout = MainLayout.class)
 @VaadinSessionScope
-public class TestDecorator extends VerticalLayout implements Decorator, Refreshable {
+public class TestDecorator extends VerticalLayout implements Decorator, Refreshable, CompositeBuilder {
 
     private TranslateView view;
     private WordService wordService;

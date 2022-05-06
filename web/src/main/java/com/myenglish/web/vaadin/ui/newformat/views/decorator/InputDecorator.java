@@ -15,6 +15,7 @@ import com.myenglish.web.vaadin.ui.newformat.views.component.buttons.ButtonGetAn
 import com.myenglish.web.vaadin.ui.newformat.views.component.buttons.ButtonNextComponent;
 import com.myenglish.web.vaadin.ui.newformat.views.composite.ButtonsComposite;
 import com.myenglish.web.vaadin.ui.newformat.views.composite.Composite;
+import com.myenglish.web.vaadin.ui.newformat.views.composite.CompositeBuilder;
 import com.myenglish.web.vaadin.ui.newformat.views.composite.InputComposite;
 import com.myenglish.web.vaadin.ui.newformat.views.mediator.ResultMediator;
 import com.vaadin.flow.component.Component;
@@ -34,7 +35,7 @@ import java.util.stream.Collectors;
 @PageTitle("Input")
 @Route(value = "word/input", layout = MainLayout.class)
 @VaadinSessionScope
-public class InputDecorator extends VerticalLayout implements Decorator, Refreshable {
+public class InputDecorator extends VerticalLayout implements Decorator, Refreshable, CompositeBuilder {
 
     private TranslateView view;
     private WordService wordService;
