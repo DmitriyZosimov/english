@@ -2,7 +2,7 @@ package com.myenglish.web.vaadin.ui.newformat.views.composite;
 
 import com.myenglish.web.vaadin.ui.newformat.views.ComponentId;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
-import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.orderedlayout.ThemableLayout;
 
 /**
  * The composite contains primary components of test decorator like
@@ -16,8 +16,7 @@ public class TestComposite extends AbstractComposite {
     public TestComposite() {
         super();
         setId(ComponentId.WORD_TEST);
-        getLayout().setAlignItems(FlexComponent.Alignment.CENTER);
-        //TODO: fix this
-        ((VerticalLayout) getLayout()).setMargin(false);
+        ((FlexComponent) getLayout()).setAlignItems(FlexComponent.Alignment.CENTER);
+        ((ThemableLayout) getLayout()).setMargin(false);
     }
 }

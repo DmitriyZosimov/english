@@ -10,6 +10,6 @@ public class InputComposite extends AbstractComposite {
 
     public InputComposite() {
         setId(ComponentId.WORD_INPUT);
-        super.getLayout().setAlignItems(FlexComponent.Alignment.CENTER);
+        ((FlexComponent) super.getLayout()).setAlignItems(FlexComponent.Alignment.CENTER);
     }
 }

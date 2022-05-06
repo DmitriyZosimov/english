@@ -10,19 +10,10 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
  */
 public class ButtonsComposite extends AbstractComposite implements ChainOfResponsibilityHandler {
 
-    private HorizontalLayout layout;
-
     public ButtonsComposite(String id) {
+        super(new HorizontalLayout());
+        ((HorizontalLayout)super.getLayout()).setVerticalComponentAlignment(FlexComponent.Alignment.CENTER);
         setId(id);
-        this.layout = new HorizontalLayout();
-    }
-
-    @Override
-    public Component operation() {
-        layout.removeAll();
-        super.getComponents().forEach(component -> layout.add(component.operation()));
-        layout.setVerticalComponentAlignment(FlexComponent.Alignment.CENTER);
-        return layout;
     }
 
     @Override
@@ -32,6 +23,6 @@ public class ButtonsComposite extends AbstractComposite implements ChainOfRespon
 
     @Override
     public HorizontalLayout getLayout() {
-        return this.layout;
+        return (HorizontalLayout) super.getLayout();
     }
 }

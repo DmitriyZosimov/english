@@ -2,6 +2,7 @@ package com.myenglish.web.vaadin.ui.newformat.views.composite;
 
 import com.myenglish.web.vaadin.ui.newformat.views.component.VaadinComponent;
 import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.HasComponents;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 
@@ -15,7 +16,7 @@ import java.util.LinkedList;
 public abstract class AbstractComposite implements Composite {
 
     private Deque<VaadinComponent> components;
-    private VerticalLayout layout;
+    private HasComponents layout;
     private String id;
 
     public AbstractComposite() {
@@ -23,9 +24,14 @@ public abstract class AbstractComposite implements Composite {
         this.layout = new VerticalLayout();
     }
 
+    public AbstractComposite(HasComponents layout) {
+        this.layout = layout;
+        this.components = new LinkedList<>();
+    }
+
     public void setId(String id) {
         this.id = id;
-        layout.setId(this.id);
+        ((Component)layout).setId(this.id);
     }
 
     @Override
@@ -42,15 +48,14 @@ public abstract class AbstractComposite implements Composite {
     public Component operation() {
         layout.removeAll();
         components.forEach(component -> layout.add(component.operation()));
-        return layout;
+        return (Component) layout;
     }
 
     public Deque<VaadinComponent> getComponents() {
         return components;
     }
 
-    //TODO: fix return element
-    public FlexComponent getLayout() {
+    public HasComponents getLayout() {
         return layout;
     }
 }
