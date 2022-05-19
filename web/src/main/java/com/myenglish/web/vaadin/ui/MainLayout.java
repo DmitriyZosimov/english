@@ -1,5 +1,6 @@
 package com.myenglish.web.vaadin.ui;
 
+import com.myenglish.web.vaadin.ui.newformat.views.decorator.AddWordDecorator;
 import com.myenglish.web.vaadin.ui.newformat.views.decorator.InputDecorator;
 import com.myenglish.web.vaadin.ui.newformat.views.decorator.TestDecorator;
 import com.myenglish.web.vaadin.ui.views.*;
@@ -15,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @PageTitle("Main")
-public class MainLayout extends AppLayout{
+public class MainLayout extends AppLayout {
 
     public static class MenuItemInfo {
 
@@ -104,7 +105,7 @@ public class MainLayout extends AppLayout{
                 new MenuItemInfo("Translate from russian (test)", "la la-globe", TestDecorator.class),
                 new MenuItemInfo("Translate from russian (input)", "la la-globe", InputDecorator.class),
 
-                new MenuItemInfo("Add a new word", "la la-arrow-right", AddANewWordView.class),
+                new MenuItemInfo("Add a new word", "la la-arrow-right", AddWordDecorator.class),
 
                 new MenuItemInfo("Edit a word", "la la-arrow-right", EditAWordView.class),
                 new MenuItemInfo("Verbs", "la la-arrow-right", VerbView.class),

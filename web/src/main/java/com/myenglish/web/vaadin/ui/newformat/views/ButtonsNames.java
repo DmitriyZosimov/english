@@ -10,5 +10,7 @@ public class ButtonsNames {
     public static final String GET_ANSWER = "Get answer";
     public static final String INPUT_MODE = "Input mode";
     public static final String TEST_MODE = "Test mode";
+    public static final String SAVE = "Save";
     public static final String SELECT_DATE = "Select date";
+    public static final String PLUS = "+";
 }
